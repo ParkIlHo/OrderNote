@@ -20,7 +20,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Copyrightⓒ 2019. msLeeHole All Rights Reserved"
+        android:text="Copyrightⓒ 2019. msLeeWhole All Rights Reserved"
         android:textColor="@color/string"
         android:textSize="13dp"
         android:layout_marginBottom="15dp"
