@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 
 class SplashActivity : AppCompatActivity() {
 
@@ -13,6 +14,7 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_splash)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { // Android M 이상일 경우 Permission check
             var perReEx = checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -39,9 +41,12 @@ class SplashActivity : AppCompatActivity() {
     }
 
     fun init() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
+        val r = Runnable {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        Handler().postDelayed(r, 2000)
     }
 
     fun initPermission() {

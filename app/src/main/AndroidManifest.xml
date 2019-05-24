@@ -14,8 +14,8 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".SplashActivity"
-                  android:theme="@style/SplashTheme"
                   android:windowSoftInputMode="stateAlwaysHidden"
+                  android:theme="@style/Theme.AppCompat.NoActionBar"
                   android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
