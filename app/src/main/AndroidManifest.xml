@@ -24,6 +24,11 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".PasswordActivity"
+                  android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
+                  android:screenOrientation="portrait">
+        </activity>
+
         <activity android:name=".MainActivity"
                   android:windowSoftInputMode="stateAlwaysHidden"
                   android:screenOrientation="portrait">

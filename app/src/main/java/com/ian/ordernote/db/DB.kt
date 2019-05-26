@@ -1,14 +1,22 @@
 package com.ian.ordernote.db
 
 import android.content.Context
+import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import java.lang.Exception
+import com.ian.ordernote.db.DB.DatabaseHelper
+import java.nio.file.Files.delete
+
+
+
+
 
 class DB(context : Context) {
 
-    var mDB: SQLiteDatabase? = null
+    var mDbHelper: DatabaseHelper? = null
+    var mDb: SQLiteDatabase? = null
     var mContext: Context? = null
     var db: DB? = null
 
@@ -23,8 +31,57 @@ class DB(context : Context) {
         return db as DB
     }
 
+    @Synchronized
+    @Throws(SQLException::class)
+    fun open(): DB {
+        if (mDbHelper == null) {
+            mDbHelper = DatabaseHelper(this.mContext)
+            mDb = mDbHelper?.getWritableDatabase()
+        }
+        return this
+    }
 
-    class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DBConfig().DB_NAME, null, DBConfig().DB_VERSION) {
+    @Throws(SQLException::class)
+    fun close(): DB {
+        mDb?.close()
+        mDbHelper?.close()
+        mDbHelper = null
+
+        return this
+    }
+
+    private fun chkDB() {
+        try {
+            if (mDb == null) {
+                this.open()
+            }
+            if (mDb?.isOpen() === false) {
+                this.open()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    fun clearDb(): Int {
+        chkDB()
+
+        var rtn = -1
+        mDb?.beginTransaction()
+
+        try {
+            rtn = mDb?.delete(DBConfig().TB_CUSTOMER, null, null)!!
+
+            mDb?.setTransactionSuccessful()
+        } finally {
+            mDb?.endTransaction()
+        }
+        return rtn
+    }
+
+
+    class DatabaseHelper(context: Context?) : SQLiteOpenHelper(context, DBConfig().DB_NAME, null, DBConfig().DB_VERSION) {
 
         var mDBContext: Context? = null
 

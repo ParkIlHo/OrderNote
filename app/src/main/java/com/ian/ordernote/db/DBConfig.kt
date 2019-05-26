@@ -9,11 +9,83 @@ class DBConfig {
     val DB_VERSION = 1
 
     // table name
+    val TB_CUSTOMER = "customer_info"
     val TB_ORDER = "order_info"
 
     // columns
+    // name
+    val CO_NAME = "name"
+    // 이메일
+    val CO_EMAIL = "email"
+    // 전화번호
+    val CO_TEL = "tel"
+    // 핸드폰
+    val CO_MOBILE = "mobile"
 
-    val CREATE_ORDER = ""
+    //상품명
+    val CO_PRODUCT_NAME = "product_name"
+    //주문날짜
+    val CO_ORDER_DATE = "order_date"
+    //출고예정일
+    val CO_RELEASE_SCHEDULE = "release_schedule"
+    //원가
+    val CO_COAST_PRICE = "coast_price"
+    //판매금액
+    val CO_SELLING_PRICE = "selling_price"
+    //출고완료여부
+    val CO_RELEASE_YN = "release_yn"
+    //상품이미지
+    val CO_PRODUCT_IMAGE = "product_image"
+    //배송주소
+    val CO_SHIPPING_ADDRESS = "shipping_address"
+    //거래처명
+    val CO_ACCOUNT_NAME = "account_name"
+    //함량
+    val CO_CONTENT = "content"
+    //컬러
+    val CO_COLOR = "color"
+    //사이즈
+    val CO_SIZE = "size"
+    //변형
+    val CO_TRANSFORM = "transform"
+    //손님약속날짜
+    val CO_PROMISE_DATE = "promise_date"
+    //비고
+    val CO_OTHER = "other"
+    val CO_INDEX = "index"
+
+
+    val CREATE_CUSTOMER = "CREATE TABLE IF NOT EXISTS " + TB_CUSTOMER +
+            "(" + CO_NAME + " VARCHAR(20) NOT NULL," +
+            CO_EMAIL + " VARCHAR(100)," +
+            CO_TEL + " VARCHAR(20)," +
+            CO_MOBILE + " VARCHAR(20) NOT NULL," +
+            CO_OTHER + " VARCHAR(500)," +
+            " Primary Key(" + CO_MOBILE + ")" + ");"
+    val CREATE_ORDER = "CREATE TABLE IF NOT EXISTS " + TB_ORDER +
+            "(" + CO_INDEX + " INT NOT NULL AUTO_INCREMENT," +
+            CO_NAME + " VARCHAR(20) NOT NULL," +
+            CO_EMAIL + " VARCHAR(100)," +
+            CO_TEL + " VARCHAR(20)," +
+            CO_MOBILE + " VARCHAR(20) NOT NULL," +
+            CO_OTHER + " VARCHAR(500)," +
+
+            CO_PRODUCT_NAME + " VARCHAR(20) NOT NULL," +
+            CO_ORDER_DATE + " DATETIME," +
+            CO_RELEASE_SCHEDULE + " DATETIME," +
+            CO_COAST_PRICE + " INT UNSIGNED NOT NULL DEFAULT '0'," +
+            CO_SELLING_PRICE + " INT UNSIGNED NOT NULL DEFAULT '0'," +
+            CO_RELEASE_YN + " CHAR(1) NOT NULL DEFAULT N," +
+            CO_PRODUCT_IMAGE + " VARCHAR(500)," +
+            CO_SHIPPING_ADDRESS + " VARCHAR(500)," +
+            CO_ACCOUNT_NAME + " VARCHAR(20)," +
+            CO_CONTENT + " INT UNSIGNED NOT NULL DEFAULT '0'," +
+            CO_COLOR + " VARCHAR(20)," +
+            CO_SIZE + " VARCHAR(50)," +
+            CO_TRANSFORM + " VARCHAR(500)," +
+            CO_PROMISE_DATE + " DATETIME," +
+            CO_OTHER + " VARCHAR(500)," +
+            " Primary Key(" + CO_INDEX + ")" + ");"
     /*val CREATE_ORDER = "CREATE TABLE IF NOT EXISTS " + TB_ORDER +
             "(" + CO_STD_ID + " INT NOT NULL," +
             CO_NAME + " VARCHAR(20) NOT NULL," +

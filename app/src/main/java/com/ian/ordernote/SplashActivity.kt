@@ -42,7 +42,8 @@ class SplashActivity : AppCompatActivity() {
 
     fun init() {
         val r = Runnable {
-            val intent = Intent(this, MainActivity::class.java)
+//            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, PasswordActivity::class.java)
             startActivity(intent)
             finish()
         }
