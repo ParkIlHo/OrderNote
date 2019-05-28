@@ -6,11 +6,15 @@ import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Menu
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
 import com.ian.ordernote.core.OrderNotePrefs
 import com.ian.ordernote.util.ContextExtentions
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_password.*
 
 class PasswordActivity: AppCompatActivity(), View.OnClickListener {
@@ -39,8 +43,8 @@ class PasswordActivity: AppCompatActivity(), View.OnClickListener {
             // Password error
             // EditText 초기화
             // Password error toast 생성
-            password.text = "" as Editable
-
+            password.setText("", TextView.BufferType.EDITABLE)
+            Toast.makeText(this, "비밀번호가 틀렸습니다!!!", Toast.LENGTH_SHORT).show()
         }
 
     }
