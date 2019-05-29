@@ -1,10 +1,13 @@
 package com.ian.ordernote.db
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
+import com.ian.ordernote.data.CustomerInfo
+import com.ian.ordernote.data.OrderInfo
 import java.lang.Exception
 import com.ian.ordernote.db.DB.DatabaseHelper
 import java.nio.file.Files.delete
@@ -68,6 +71,7 @@ class DB(context : Context) {
 
         try {
             rtn = mDb?.delete(DBConfig().TB_CUSTOMER, null, null)!!
+            rtn = mDb?.delete(DBConfig().TB_ORDER, null, null)!!
 
             mDb?.setTransactionSuccessful()
         } finally {
@@ -76,12 +80,105 @@ class DB(context : Context) {
         return rtn
     }
 
+    fun setCustomer(customer: CustomerInfo): Long {
+        chkDB()
+
+        var rtn = -1L
+
+        mDb?.beginTransaction()
+
+        try {
+            var whereClause = "" + DBConfig().CO_MOBILE + "=?"
+            var whereArgs = arrayOf(customer.mobile)
+
+            var values = ContentValues()
+
+            values.put(DBConfig().CO_NAME, customer.name)
+            values.put(DBConfig().CO_EMAIL, customer.email)
+            values.put(DBConfig().CO_TEL, customer.tel)
+            values.put(DBConfig().CO_MOBILE, customer.mobile)
+            values.put(DBConfig().CO_OTHER, customer.other)
+
+            rtn = mDb?.update(DBConfig().TB_CUSTOMER, values, whereClause, whereArgs)!!.toLong()
+
+            if(rtn < 1) {
+                Log.e("DB setCustomer", "insert :::${values.toString()}")
+                rtn  = mDb?.insertOrThrow(DBConfig().TB_CUSTOMER, null, values)!!
+            }
+
+            mDb?.setTransactionSuccessful()
+        } finally {
+            mDb?.endTransaction()
+        }
+
+        return rtn
+    }
+
+    fun setOrder(order: OrderInfo): Long {
+        chkDB()
+
+        var rtn = -1L
+
+        mDb?.beginTransaction()
+
+        var isUpdate = if(order.index > -1) true else false
+
+        try {
+            var whereClause = "" + DBConfig().CO_INDEX + "=?"
+            var whereArgs = arrayOf(order.index.toString())
+
+            var values = ContentValues()
+
+            if(isUpdate) {
+                values.put(DBConfig().CO_INDEX, order.index)
+            }
+
+            values.put(DBConfig().CO_NAME, order.name)
+            values.put(DBConfig().CO_EMAIL, order.email)
+            values.put(DBConfig().CO_TEL, order.tel)
+            values.put(DBConfig().CO_MOBILE, order.mobile)
+            values.put(DBConfig().CO_PRODUCT_NAME, order.productName)
+            values.put(DBConfig().CO_ORDER_DATE, order.orderDate)
+            values.put(DBConfig().CO_RELEASE_SCHEDULE, order.releaseSchedule)
+            values.put(DBConfig().CO_COAST_PRICE, order.coasePrice)
+            values.put(DBConfig().CO_SELLING_PRICE, order.sellingPrice)
+            values.put(DBConfig().CO_RELEASE_YN, order.releaseYN)
+            values.put(DBConfig().CO_PRODUCT_IMAGE, order.productImage)
+            values.put(DBConfig().CO_SHIPPING_ADDRESS, order.shippingAddress)
+            values.put(DBConfig().CO_ACCOUNT_NAME, order.accountName)
+            values.put(DBConfig().CO_CONTENT, order.content)
+            values.put(DBConfig().CO_COLOR, order.color)
+            values.put(DBConfig().CO_SIZE, order.size)
+            values.put(DBConfig().CO_TRANSFORM, order.transform)
+            values.put(DBConfig().CO_PROMISE_DATE, order.promiseDate)
+            values.put(DBConfig().CO_OTHER, order.other)
+
+
+            if(isUpdate) {
+                rtn = mDb?.update(DBConfig().TB_ORDER, values, whereClause, whereArgs)!!.toLong()
+
+                if(rtn < 1) {
+                    Log.e("DB SetOrder", "insert :::${values.toString()}")
+                    rtn  = mDb?.insertOrThrow(DBConfig().TB_ORDER, null, values)!!
+                }
+            } else {
+                rtn  = mDb?.insertOrThrow(DBConfig().TB_ORDER, null, values)!!
+            }
+
+            mDb?.setTransactionSuccessful()
+        } finally {
+            mDb?.endTransaction()
+        }
+
+        return rtn
+    }
+
 
     class DatabaseHelper(context: Context?) : SQLiteOpenHelper(context, DBConfig().DB_NAME, null, DBConfig().DB_VERSION) {
 
         var mDBContext: Context? = null
 
-        var arr_sql_tabel: List<String> = listOf(DBConfig().CREATE_ORDER)
+        var arr_sql_tabel: List<String> = listOf(DBConfig().CREATE_ORDER, DBConfig().CREATE_ORDER)
 
         init {
             mDBContext = context

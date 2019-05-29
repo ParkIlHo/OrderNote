@@ -68,7 +68,6 @@ class DBConfig {
             CO_EMAIL + " VARCHAR(100)," +
             CO_TEL + " VARCHAR(20)," +
             CO_MOBILE + " VARCHAR(20) NOT NULL," +
-            CO_OTHER + " VARCHAR(500)," +
 
             CO_PRODUCT_NAME + " VARCHAR(20) NOT NULL," +
             CO_ORDER_DATE + " DATETIME," +

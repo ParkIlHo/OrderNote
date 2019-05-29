@@ -39,6 +39,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter-->
         </activity>
+
+        <activity android:name=".OrderListActivity"
+                  android:windowSoftInputMode="stateAlwaysHidden"
+                  android:theme="@style/Theme.AppCompat.NoActionBar"
+                  android:screenOrientation="portrait">
+        </activity>
+
+        <activity android:name=".CustomerListActivity"
+                  android:windowSoftInputMode="stateAlwaysHidden"
+                  android:theme="@style/Theme.AppCompat.NoActionBar"
+                  android:screenOrientation="portrait">
+        </activity>
+
+        <activity android:name=".SettingActivity"
+                  android:windowSoftInputMode="stateAlwaysHidden"
+                  android:theme="@style/Theme.AppCompat.NoActionBar"
+                  android:screenOrientation="portrait">
+        </activity>
+
     </application>
 
 </manifest>
