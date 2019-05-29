@@ -44,7 +44,7 @@ class PasswordActivity: AppCompatActivity(), View.OnClickListener {
             // EditText 초기화
             // Password error toast 생성
             password.setText("", TextView.BufferType.EDITABLE)
-            Toast.makeText(this, "비밀번호가 틀렸습니다!!!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.wrong_pw, Toast.LENGTH_SHORT).show()
         }
 
     }

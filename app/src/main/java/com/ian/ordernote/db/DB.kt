@@ -9,10 +9,6 @@ import java.lang.Exception
 import com.ian.ordernote.db.DB.DatabaseHelper
 import java.nio.file.Files.delete
 
-
-
-
-
 class DB(context : Context) {
 
     var mDbHelper: DatabaseHelper? = null

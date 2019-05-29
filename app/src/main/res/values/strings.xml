@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">Order Note</string>
+
+    <!-- Common -->
+    <string name="copyright">Copyrightⓒ 2019. msLeeWhole All Rights Reserved</string>
+    <string name="confirm">확인</string>
+
+    <!-- Password -->
+    <string name="wrong_pw">비밀번호가 틀렸습니다!!!!</string>
+    <string name="input_pw">비밀번호 입력</string>
+    <string name="noti_pw">초기 비밀번호는 0000 입니다.</string>
+
+    <!-- Main -->
+    <string name="title_order_list">주&#160;&#160;문&#160;&#160;내&#160;&#160;역</string>
+    <string name="title_cunsumer_list">주 문 자 정 보</string>
+    <string name="title_search">검&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;색</string>
+
 </resources>

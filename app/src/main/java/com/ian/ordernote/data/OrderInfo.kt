@@ -7,7 +7,7 @@ class OrderInfo {
     var mobile = ""
 
     // index
-    val CO_INDEX = -1
+    val index = -1
     //상품명
     val productName = ""
     //주문날짜
