@@ -1,13 +1,19 @@
 package com.ian.ordernote
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_customer_list.*
-import kotlinx.android.synthetic.main.activity_order_list.*
+import java.util.*
 
 class CustomerListActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,10 +29,71 @@ class CustomerListActivity: AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+    @SuppressLint("StringFormatMatches")
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId) {
             R.id.action_customer_add -> {
                 Toast.makeText(this, "주문자 추가 화면 이동", Toast.LENGTH_SHORT).show()
+
+                val builder = AlertDialog.Builder(this)
+                val dialogView = layoutInflater.inflate(R.layout.dialog_add_customer, null)
+
+                val dialogSaveBtn = dialogView.findViewById<Button>(R.id.dialog_add_customer_save_btn)
+                val dialogCancelBtn = dialogView.findViewById<Button>(R.id.dialog_add_customer_cancel_btn)
+
+                val nameEdit = dialogView.findViewById<EditText>(R.id.dialog_add_customer_name)
+                val mobileEdit = dialogView.findViewById<EditText>(R.id.dialog_add_customer_mobile)
+                val telEdit = dialogView.findViewById<EditText>(R.id.dialog_add_customer_tel)
+                val emailEdit = dialogView.findViewById<EditText>(R.id.dialog_add_customer_email)
+                val otherEdit = dialogView.findViewById<EditText>(R.id.dialog_add_customer_other)
+
+                builder.setView(dialogView)
+                    .setCancelable(false)
+
+
+                val dialog = builder.show()
+
+                dialogSaveBtn.setOnClickListener { view : View ->
+                    val builder2 = AlertDialog.Builder(this)
+
+                    //필수 입력사항 체크
+                    if(!TextUtils.isEmpty(nameEdit.text) && !TextUtils.isEmpty(mobileEdit.text)) { // 필수 입력사항 완료
+                        builder2
+                            .setMessage(getString(R.string.save_add_customer, nameEdit.text, mobileEdit.text))
+                            .setPositiveButton(R.string.confirm) { dialogInterface: DialogInterface?, i: Int ->
+                                // db 저장
+                                dialog.dismiss()
+
+                            }
+                            .setNegativeButton(R.string.cancel) { dialogInterface: DialogInterface?, i: Int ->
+
+                            }
+                            .show()
+                    } else { // 필수 입력사항 미완료
+                        builder2
+                            .setMessage(R.string.customer_check_msg)
+                            .setPositiveButton(R.string.confirm) { dialogInterface: DialogInterface?, i: Int ->
+
+                            }
+                            .show()
+                    }
+
+                }
+
+                dialogCancelBtn.setOnClickListener { view : View ->
+                    val builder2 = AlertDialog.Builder(this)
+                    builder2
+                        .setMessage(R.string.cancel_add_customer)
+                        .setPositiveButton(R.string.confirm) { dialogInterface: DialogInterface?, i: Int ->
+                            if(dialog.isShowing) {
+                                dialog.dismiss()
+                            }
+                        }
+                        .setNegativeButton(R.string.cancel) { dialogInterface: DialogInterface?, i: Int ->
+                        }.show()
+
+                }
+
             }
         }
         return super.onOptionsItemSelected(item)
