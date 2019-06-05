@@ -84,6 +84,7 @@ class CustomerListActivity: AppCompatActivity() {
                                 // db 저장
                                 dialog.dismiss()
 
+                                initCustomerList()
                             }
                             .setNegativeButton(R.string.cancel) { dialogInterface: DialogInterface?, i: Int ->
 
@@ -131,10 +132,22 @@ class CustomerListActivity: AppCompatActivity() {
             finish()
         })
 
+        initCustomerList()
+    }
+
+    fun initCustomerList() {
         var list = mDb?.getCustomer()
 
         mAdapter = CustomerListAdapter(this, list!!)
 
         customer_list.adapter = mAdapter
+
+        if(mAdapter.count > 0) {
+            customer_list_no.visibility = View.GONE
+            customer_list_layout.visibility = View.VISIBLE
+        } else {
+            customer_list_no.visibility = View.VISIBLE
+            customer_list_layout.visibility = View.GONE
+        }
     }
 }

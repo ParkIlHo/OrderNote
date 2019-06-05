@@ -41,6 +41,7 @@
     <string name="cancel_add_customer">작성중이던 주문자 추가를 취소 하시겠습니까?</string>
     <string name="save_add_customer">작성중인 주문자 주문자 정보를 저장 하시겠습니까??\n 이름(상호) : %1$s\n 핸드폰 : %2$s</string>
     <string name="customer_check_msg">이름(상호)와 핸드폰은 필수 입력사항 입니다.\n필수 입력사항 입력을 확인 해 주세요.!!</string>
+    <string name="not_coustomer">저장된\n정보가 없습니다.!!</string>
 
     <!-- 설정 -->
 
