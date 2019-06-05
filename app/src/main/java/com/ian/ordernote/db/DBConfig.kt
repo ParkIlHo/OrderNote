@@ -52,18 +52,20 @@ class DBConfig {
     val CO_PROMISE_DATE = "promise_date"
     //비고
     val CO_OTHER = "other"
-    val CO_INDEX = "index"
+    val CO_INDEX = "id"
 
 
     val CREATE_CUSTOMER = "CREATE TABLE IF NOT EXISTS " + TB_CUSTOMER +
-            "(" + CO_NAME + " VARCHAR(20) NOT NULL," +
+            " (" + CO_NAME + " VARCHAR(20) NOT NULL," +
             CO_EMAIL + " VARCHAR(100)," +
             CO_TEL + " VARCHAR(20)," +
             CO_MOBILE + " VARCHAR(20) NOT NULL," +
             CO_OTHER + " VARCHAR(500)," +
             " Primary Key(" + CO_MOBILE + ")" + ");"
     val CREATE_ORDER = "CREATE TABLE IF NOT EXISTS " + TB_ORDER +
-            "(" + CO_INDEX + " INT NOT NULL AUTO_INCREMENT," +
+//            " (" + CO_INDEX + " INT NOT NULL AUTO_INCREMENT," +
+//            " (" + CO_INDEX + " INT NOT NULL AUTOINCREMENT," +
+            " (" + CO_INDEX + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             CO_NAME + " VARCHAR(20) NOT NULL," +
             CO_EMAIL + " VARCHAR(100)," +
             CO_TEL + " VARCHAR(20)," +
@@ -83,8 +85,9 @@ class DBConfig {
             CO_SIZE + " VARCHAR(50)," +
             CO_TRANSFORM + " VARCHAR(500)," +
             CO_PROMISE_DATE + " DATETIME," +
-            CO_OTHER + " VARCHAR(500)," +
-            " Primary Key(" + CO_INDEX + ")" + ");"
+            CO_OTHER + " VARCHAR(500))"
+//            CO_OTHER + " VARCHAR(500)," +
+//            " Primary Key(" + CO_INDEX + ")" + ");"
     /*val CREATE_ORDER = "CREATE TABLE IF NOT EXISTS " + TB_ORDER +
             "(" + CO_STD_ID + " INT NOT NULL," +
             CO_NAME + " VARCHAR(20) NOT NULL," +

@@ -8,6 +8,8 @@
     <string name="save">저장</string>
     <string name="cancel">취소</string>
     <string name="loading">Loading...</string>
+    <string name="name">이름(상호)</string>
+    <string name="mobile">핸드폰</string>
 
     <!-- Password -->
     <string name="wrong_pw">비밀번호가 틀렸습니다!!!!</string>

@@ -2,6 +2,7 @@ package com.ian.ordernote.db
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
@@ -12,7 +13,7 @@ import java.lang.Exception
 import com.ian.ordernote.db.DB.DatabaseHelper
 import java.nio.file.Files.delete
 
-class DB(context : Context) {
+class DB(context : Context?) {
 
     var mDbHelper: DatabaseHelper? = null
     var mDb: SQLiteDatabase? = null
@@ -114,6 +115,37 @@ class DB(context : Context) {
         return rtn
     }
 
+    fun getCustomer(): ArrayList<CustomerInfo>? {
+        var customerList = ArrayList<CustomerInfo>()
+
+        chkDB()
+
+        var sql = "SELECT * FROM ${DBConfig().TB_CUSTOMER}"
+
+        Log.e("DB", "sql = ${sql}")
+
+        var cursor = mDb?.rawQuery(sql, null)
+
+        if(cursor?.count!! > 0) {
+            while (cursor?.moveToNext()) {
+                var customer = CustomerInfo()
+
+                customer.name = cursor.getString(cursor.getColumnIndex(DBConfig().CO_NAME))
+                customer.mobile = cursor.getString(cursor.getColumnIndex(DBConfig().CO_MOBILE))
+                customer.tel = cursor.getString(cursor.getColumnIndex(DBConfig().CO_TEL))
+                customer.email = cursor.getString(cursor.getColumnIndex(DBConfig().CO_EMAIL))
+                customer.other = cursor.getString(cursor.getColumnIndex(DBConfig().CO_OTHER))
+
+                customerList.add(customer)
+            }
+
+            cursor.close()
+            return customerList
+        } else {
+            return ArrayList<CustomerInfo>()
+        }
+    }
+
     fun setOrder(order: OrderInfo): Long {
         chkDB()
 
@@ -178,13 +210,14 @@ class DB(context : Context) {
 
         var mDBContext: Context? = null
 
-        var arr_sql_tabel: List<String> = listOf(DBConfig().CREATE_ORDER, DBConfig().CREATE_ORDER)
+        var arr_sql_tabel: List<String> = listOf(DBConfig().CREATE_CUSTOMER, DBConfig().CREATE_ORDER)
 
         init {
             mDBContext = context
         }
         override fun onCreate(db: SQLiteDatabase?) {
             Log.e("DB onCreate() ::: ", "onCreate : " + arr_sql_tabel[0])
+            Log.e("DB onCreate() ::: ", "onCreate : " + arr_sql_tabel[1])
             execRawQuery(db, arr_sql_tabel)
 
             Log.d("DB onCreate() ::: ", "db : " + db)

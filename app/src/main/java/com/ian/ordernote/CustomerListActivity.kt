@@ -6,16 +6,24 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.ian.ordernote.data.CustomerInfo
+import com.ian.ordernote.db.DB
+import com.ian.ordernote.view.CustomerListAdapter
 import kotlinx.android.synthetic.main.activity_customer_list.*
 import java.util.*
 
 class CustomerListActivity: AppCompatActivity() {
+
+    var mDb : DB? = null
+    lateinit var mAdapter: CustomerListAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -61,6 +69,18 @@ class CustomerListActivity: AppCompatActivity() {
                         builder2
                             .setMessage(getString(R.string.save_add_customer, nameEdit.text, mobileEdit.text))
                             .setPositiveButton(R.string.confirm) { dialogInterface: DialogInterface?, i: Int ->
+
+                                var customer = CustomerInfo()
+                                customer.name = nameEdit.text.toString()
+                                customer.mobile = mobileEdit.text.toString()
+                                customer.tel = telEdit.text.toString()
+                                customer.email = emailEdit.text.toString()
+                                customer.other = otherEdit.text.toString()
+
+                                var result = mDb?.setCustomer(customer)
+
+                                Log.e("DB setCustomer", "result = ${result}")
+
                                 // db 저장
                                 dialog.dismiss()
 
@@ -100,6 +120,8 @@ class CustomerListActivity: AppCompatActivity() {
     }
 
     fun init() {
+        mDb = DB(applicationContext).getInstance(applicationContext)
+
         customer_list_toolbar.setTitle(R.string.title_custmer_list)
 
         setSupportActionBar(customer_list_toolbar)
@@ -108,5 +130,11 @@ class CustomerListActivity: AppCompatActivity() {
         customer_list_toolbar.setNavigationOnClickListener(View.OnClickListener {
             finish()
         })
+
+        var list = mDb?.getCustomer()
+
+        mAdapter = CustomerListAdapter(this, list!!)
+
+        customer_list.adapter = mAdapter
     }
 }
