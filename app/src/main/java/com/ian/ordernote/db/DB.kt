@@ -89,21 +89,27 @@ class DB(context : Context?) {
         mDb?.beginTransaction()
 
         try {
-            var whereClause = "" + DBConfig().CO_MOBILE + "=?"
-            var whereArgs = arrayOf(customer.mobile)
 
             var values = ContentValues()
-
             values.put(DBConfig().CO_NAME, customer.name)
             values.put(DBConfig().CO_EMAIL, customer.email)
             values.put(DBConfig().CO_TEL, customer.tel)
             values.put(DBConfig().CO_MOBILE, customer.mobile)
             values.put(DBConfig().CO_OTHER, customer.other)
 
-            rtn = mDb?.update(DBConfig().TB_CUSTOMER, values, whereClause, whereArgs)!!.toLong()
+            if(customer.id > -1) {
+                var whereClause = "" + DBConfig().CO_INDEX + "=?"
+                var whereArgs = arrayOf(customer.id.toString())
 
-            if(rtn < 1) {
-                Log.e("DB setCustomer", "insert :::${values.toString()}")
+                values.put(DBConfig().CO_INDEX, customer.id)
+
+                rtn = mDb?.update(DBConfig().TB_CUSTOMER, values, whereClause, whereArgs)!!.toLong()
+
+                if(rtn < 1) {
+                    Log.e("DB setCustomer", "insert :::${values.toString()}")
+                    rtn  = mDb?.insertOrThrow(DBConfig().TB_CUSTOMER, null, values)!!
+                }
+            } else {
                 rtn  = mDb?.insertOrThrow(DBConfig().TB_CUSTOMER, null, values)!!
             }
 
@@ -130,6 +136,39 @@ class DB(context : Context?) {
             while (cursor?.moveToNext()) {
                 var customer = CustomerInfo()
 
+                customer.id = cursor.getInt(cursor.getColumnIndex(DBConfig().CO_INDEX))
+                customer.name = cursor.getString(cursor.getColumnIndex(DBConfig().CO_NAME))
+                customer.mobile = cursor.getString(cursor.getColumnIndex(DBConfig().CO_MOBILE))
+                customer.tel = cursor.getString(cursor.getColumnIndex(DBConfig().CO_TEL))
+                customer.email = cursor.getString(cursor.getColumnIndex(DBConfig().CO_EMAIL))
+                customer.other = cursor.getString(cursor.getColumnIndex(DBConfig().CO_OTHER))
+
+                customerList.add(customer)
+            }
+
+            cursor.close()
+            return customerList
+        } else {
+            return ArrayList<CustomerInfo>()
+        }
+    }
+
+    fun getCustomer(mobile : String): ArrayList<CustomerInfo> {
+        var customerList = ArrayList<CustomerInfo>()
+
+        chkDB()
+
+        var sql = "SELECT * FROM ${DBConfig().TB_CUSTOMER} WHERE ${DBConfig().CO_MOBILE} = '${mobile}'"
+
+        Log.e("DB", "sql = ${sql}")
+
+        var cursor = mDb?.rawQuery(sql, null)
+
+        if(cursor?.count!! > 0) {
+            while (cursor?.moveToNext()) {
+                var customer = CustomerInfo()
+
+                customer.id = cursor.getInt(cursor.getColumnIndex(DBConfig().CO_INDEX))
                 customer.name = cursor.getString(cursor.getColumnIndex(DBConfig().CO_NAME))
                 customer.mobile = cursor.getString(cursor.getColumnIndex(DBConfig().CO_MOBILE))
                 customer.tel = cursor.getString(cursor.getColumnIndex(DBConfig().CO_TEL))
@@ -154,8 +193,9 @@ class DB(context : Context?) {
         mDb?.beginTransaction()
 
         try {
-            var whereClause = "${DBConfig().CO_MOBILE}=? and ${DBConfig().CO_NAME}=?"
-            var whereArgs = arrayOf(customer.mobile, customer.name)
+//            var whereClause = "${DBConfig().CO_MOBILE}=? and ${DBConfig().CO_NAME}=?"
+            var whereClause = "${DBConfig().CO_INDEX}=?"
+            var whereArgs = arrayOf(customer.id.toString())
 
             rtn = mDb?.delete(DBConfig().TB_CUSTOMER, whereClause, whereArgs)!!
 

@@ -56,12 +56,12 @@ class DBConfig {
 
 
     val CREATE_CUSTOMER = "CREATE TABLE IF NOT EXISTS " + TB_CUSTOMER +
-            " (" + CO_NAME + " VARCHAR(20) NOT NULL," +
+            " (" + CO_INDEX + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+            CO_NAME + " VARCHAR(20) NOT NULL," +
             CO_EMAIL + " VARCHAR(100)," +
             CO_TEL + " VARCHAR(20)," +
             CO_MOBILE + " VARCHAR(20) NOT NULL," +
-            CO_OTHER + " VARCHAR(500)," +
-            " Primary Key(" + CO_MOBILE + ")" + ");"
+            CO_OTHER + " VARCHAR(500))"
     val CREATE_ORDER = "CREATE TABLE IF NOT EXISTS " + TB_ORDER +
 //            " (" + CO_INDEX + " INT NOT NULL AUTO_INCREMENT," +
 //            " (" + CO_INDEX + " INT NOT NULL AUTOINCREMENT," +

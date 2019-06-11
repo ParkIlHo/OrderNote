@@ -7,4 +7,5 @@
     <color name="main">#c1af7b</color>
     <color name="bg">#f7eed4</color>
     <color name="string">#463400</color>
+    <color name="edit_bg">#FAEFD5</color>
 </resources>

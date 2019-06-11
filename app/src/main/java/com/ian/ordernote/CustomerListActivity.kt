@@ -29,7 +29,7 @@ class CustomerListActivity: AppCompatActivity() {
         }
 
         override fun onAdd() {
-
+            initCustomerList()
         }
 
     }
@@ -92,14 +92,17 @@ class CustomerListActivity: AppCompatActivity() {
                                 customer.email = emailEdit.text.toString()
                                 customer.other = otherEdit.text.toString()
 
-                                var result = mDb?.setCustomer(customer)
+                                if(mDb?.getCustomer(customer.mobile)?.size!! > 0) {
+                                    Toast.makeText(this, getString(R.string.duplication_customer_msg), Toast.LENGTH_SHORT).show()
+                                } else {
+                                    var result = mDb?.setCustomer(customer)
+                                    Log.e("DB setCustomer", "result = ${result}")
 
-                                Log.e("DB setCustomer", "result = ${result}")
+                                    // db 저장
+                                    dialog.dismiss()
 
-                                // db 저장
-                                dialog.dismiss()
-
-                                initCustomerList()
+                                    initCustomerList()
+                                }
                             }
                             .setNegativeButton(R.string.cancel) { dialogInterface: DialogInterface?, i: Int ->
 
