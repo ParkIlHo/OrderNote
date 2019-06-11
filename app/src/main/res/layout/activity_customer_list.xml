@@ -55,7 +55,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="2"
                     android:text="@string/name"
-                    android:textSize="25dp"
+                    android:textSize="20dp"
                     android:textColor="@color/string"
                     android:textStyle="bold"
                     android:gravity="center"/>
@@ -64,10 +64,16 @@
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:text="@string/mobile"
-                    android:textSize="25dp"
+                    android:textSize="20dp"
                     android:textColor="@color/string"
                     android:textStyle="bold"
                     android:gravity="center"/>
+            <RelativeLayout
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="15dp">
+            </RelativeLayout>
+
         </LinearLayout>
 
         <ListView

@@ -23,6 +23,21 @@ class CustomerListActivity: AppCompatActivity() {
 
     var mDb : DB? = null
     lateinit var mAdapter: CustomerListAdapter
+    val listener: CustomerChangeListener? = object : CustomerChangeListener {
+        override fun onDelete() {
+            initCustomerList()
+        }
+
+        override fun onAdd() {
+
+        }
+
+    }
+
+    interface CustomerChangeListener {
+        fun onDelete()
+        fun onAdd()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -138,7 +153,7 @@ class CustomerListActivity: AppCompatActivity() {
     fun initCustomerList() {
         var list = mDb?.getCustomer()
 
-        mAdapter = CustomerListAdapter(this, list!!)
+        mAdapter = CustomerListAdapter(this, list!!, listener!!)
 
         customer_list.adapter = mAdapter
 

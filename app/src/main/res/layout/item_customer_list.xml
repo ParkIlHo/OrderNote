@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             android:layout_width="match_parent"
+                                             xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
                                              android:layout_height="60dp">
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            tools:ignore="MissingConstraints">
         <TextView
                 android:id="@+id/item_customer_list_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:text="test"
-                android:textSize="20dp"
+                android:textSize="15dp"
                 android:textColor="@color/string"
                 android:gravity="center"/>
         <TextView
@@ -21,9 +22,15 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:text="010-0000-0000"
-                android:textSize="20dp"
+                android:textSize="15dp"
                 android:textColor="@color/string"
                 android:gravity="center"/>
+        <Button
+                android:id="@+id/item_customer_list_delete"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/selector_icon_delete"/>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

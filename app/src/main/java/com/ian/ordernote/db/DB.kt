@@ -146,6 +146,27 @@ class DB(context : Context?) {
         }
     }
 
+    fun delCustomer(customer: CustomerInfo): Int {
+        chkDB()
+
+        var rtn = -1
+
+        mDb?.beginTransaction()
+
+        try {
+            var whereClause = "${DBConfig().CO_MOBILE}=? and ${DBConfig().CO_NAME}=?"
+            var whereArgs = arrayOf(customer.mobile, customer.name)
+
+            rtn = mDb?.delete(DBConfig().TB_CUSTOMER, whereClause, whereArgs)!!
+
+            mDb?.setTransactionSuccessful()
+        } finally {
+            mDb?.endTransaction()
+        }
+
+        return rtn
+    }
+
     fun setOrder(order: OrderInfo): Long {
         chkDB()
 
