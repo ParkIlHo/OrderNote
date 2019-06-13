@@ -266,6 +266,54 @@ class DB(context : Context?) {
         return rtn
     }
 
+    fun getOrder(): ArrayList<OrderInfo>? {
+        var orderList = ArrayList<OrderInfo>()
+
+        chkDB()
+
+        var sql = "SELECT * FROM ${DBConfig().TB_ORDER} ORDER BY ${DBConfig().CO_RELEASE_YN}, ${DBConfig().CO_NAME}"
+
+        Log.e("DB", "sql = ${sql}")
+
+        var cursor = mDb?.rawQuery(sql, null)
+
+        if(cursor?.count!! > 0) {
+            while (cursor?.moveToNext()) {
+                var order = OrderInfo()
+
+
+                orderList.add(order)
+            }
+
+            cursor.close()
+            return orderList
+        } else {
+            return ArrayList<OrderInfo>()
+        }
+    }
+
+    fun delOrder(order: OrderInfo): Int {
+        chkDB()
+
+        var rtn = -1
+
+        mDb?.beginTransaction()
+
+        try {
+//            var whereClause = "${DBConfig().CO_MOBILE}=? and ${DBConfig().CO_NAME}=?"
+            var whereClause = "${DBConfig().CO_INDEX}=?"
+            var whereArgs = arrayOf(order.index.toString())
+
+            rtn = mDb?.delete(DBConfig().TB_ORDER, whereClause, whereArgs)!!
+
+            mDb?.setTransactionSuccessful()
+        } finally {
+            mDb?.endTransaction()
+        }
+
+        return rtn
+    }
+
 
     class DatabaseHelper(context: Context?) : SQLiteOpenHelper(context, DBConfig().DB_NAME, null, DBConfig().DB_VERSION) {
 
