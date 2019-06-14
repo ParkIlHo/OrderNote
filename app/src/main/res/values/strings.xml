@@ -26,6 +26,36 @@
     <!-- Order List -->
     <string name="title_order_list">주문내역</string>
     <string name="add_order">주문작성</string>
+    <string name="label_product_name">상품명 :</string>
+    <string name="label_order_date">주문날짜 :</string>
+    <string name="label_release_date">출고예정일 :</string>
+    <string name="label_coast_price">원가 :</string>
+    <string name="label_selling_price">판매금액 :</string>
+    <string name="label_release">출고완료여부 :</string>
+    <string name="label_product_image">상품이미지 :</string>
+    <string name="label_shipping_address">배송주소 :</string>
+    <string name="label_account_name">거래처명 : </string>
+    <string name="label_content">함량 : </string>
+    <string name="label_color">컬러 : </string>
+    <string name="label_size">사이즈 : </string>
+    <string name="label_transform">변형 : </string>
+    <string name="label_promise_date">손님약속날짜 : </string>
+    <string name="product_name_hint">상품명을 입력하세요.</string>
+    <string name="hint_order_date">주문받은 날짜를 입력하세요.</string>
+    <string name="hint_release_date">출고예정일을 입력하세요.</string>
+    <string name="hint_coast_price">원가금액을 입력하세요.</string>
+    <string name="hint_selling_price">판매금액을 입력하세요.</string>
+    <string name="hint_release">출고여부(Y/N 입력, 미입력시 자동 N).</string>
+    <string name="hint_product_image">상품이미지를 선택하세요.</string>
+    <string name="hint_shipping_address">배송주소를 입력하세요.</string>
+    <string name="hint_account_name">거래처명을 입력하세요.</string>
+    <string name="hint_content">금 함량을 입력하세요.</string>
+    <string name="hint_color">색상을 입력하세요.</string>
+    <string name="hint_size">사이즈를 입력하세요.</string>
+    <string name="hint_transform">변형사항을 입력하세요.</string>
+    <string name="hint_promise_date">손님과의 약속 날짜를 입력하세요.</string>
+    <string name="cancel_add_order">작성중이던 주문내역 추가를 취소 하시겠습니까?</string>
+    <string name="delete_order">선택하신 주문내역을 삭제 하시겠습니까??\n 이름(상호) : %1$s\n 핸드폰 : %2$s\n제품명 : %3$s</string>
 
     <!-- Customer List -->
     <string name="title_custmer_list">주문자 정보</string>
