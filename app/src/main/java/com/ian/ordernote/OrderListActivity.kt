@@ -10,10 +10,29 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.ian.ordernote.db.DB
 import com.ian.ordernote.dialog.OrderDialog
+import com.ian.ordernote.view.CustomerListAdapter
+import com.ian.ordernote.view.OrderListAdapter
+import kotlinx.android.synthetic.main.activity_customer_list.*
 import kotlinx.android.synthetic.main.activity_order_list.*
 
 class OrderListActivity: AppCompatActivity() {
+
+    var mDb : DB? = null
+    lateinit var mAdapter: OrderListAdapter
+
+    val listener: CustomerListActivity.CustomerChangeListener? = object : CustomerListActivity.CustomerChangeListener {
+        override fun onDelete() {
+            initOrderList()
+        }
+
+        override fun onAdd() {
+            initOrderList()
+        }
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -32,7 +51,7 @@ class OrderListActivity: AppCompatActivity() {
             R.id.action_order_add -> {
                 Toast.makeText(this, "주문 추가 화면 이동", Toast.LENGTH_SHORT).show()
 
-                val dialog = OrderDialog(this)
+                val dialog = OrderDialog(this, listener!!)
                 dialog.show()
 //                val builder = AlertDialog.Builder(this)
 //                val dialogView = layoutInflater.inflate(R.layout.dialog_add_order, null)
@@ -74,6 +93,9 @@ class OrderListActivity: AppCompatActivity() {
     }
 
     fun init() {
+
+        mDb = DB(applicationContext).getInstance(applicationContext)
+
         order_list_toolbar.setTitle(R.string.title_order_list)
 
         setSupportActionBar(order_list_toolbar)
@@ -82,9 +104,23 @@ class OrderListActivity: AppCompatActivity() {
         order_list_toolbar.setNavigationOnClickListener(View.OnClickListener {
             finish()
         })
+
+        initOrderList()
     }
 
     fun initOrderList() {
+        var list = mDb?.getOrder()
 
+        mAdapter = OrderListAdapter(this, list!!, listener!!)
+
+        order_list.adapter = mAdapter
+
+        if(mAdapter.count > 0) {
+            order_list_no.visibility = View.GONE
+            order_list_layout.visibility = View.VISIBLE
+        } else {
+            order_list_no.visibility = View.VISIBLE
+            order_list_layout.visibility = View.GONE
+        }
     }
 }

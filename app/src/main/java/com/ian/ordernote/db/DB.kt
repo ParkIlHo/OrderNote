@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.text.TextUtils
 import android.util.Log
 import com.ian.ordernote.data.CustomerInfo
 import com.ian.ordernote.data.OrderInfo
@@ -233,9 +234,13 @@ class DB(context : Context?) {
             values.put(DBConfig().CO_PRODUCT_NAME, order.productName)
             values.put(DBConfig().CO_ORDER_DATE, order.orderDate)
             values.put(DBConfig().CO_RELEASE_SCHEDULE, order.releaseSchedule)
-            values.put(DBConfig().CO_COAST_PRICE, order.coasePrice)
+            values.put(DBConfig().CO_COAST_PRICE, order.coastPrice)
             values.put(DBConfig().CO_SELLING_PRICE, order.sellingPrice)
-            values.put(DBConfig().CO_RELEASE_YN, order.releaseYN)
+            if(TextUtils.isEmpty(order.releaseYN)) {
+                values.put(DBConfig().CO_RELEASE_YN, "N")
+            } else {
+                values.put(DBConfig().CO_RELEASE_YN, order.releaseYN)
+            }
             values.put(DBConfig().CO_PRODUCT_IMAGE, order.productImage)
             values.put(DBConfig().CO_SHIPPING_ADDRESS, order.shippingAddress)
             values.put(DBConfig().CO_ACCOUNT_NAME, order.accountName)
@@ -281,6 +286,28 @@ class DB(context : Context?) {
             while (cursor?.moveToNext()) {
                 var order = OrderInfo()
 
+                order.name = cursor.getString(cursor.getColumnIndex(DBConfig().CO_NAME))
+                order.mobile = cursor.getString(cursor.getColumnIndex(DBConfig().CO_MOBILE))
+                order.tel = cursor.getString(cursor.getColumnIndex(DBConfig().CO_TEL))
+                order.email = cursor.getString(cursor.getColumnIndex(DBConfig().CO_EMAIL))
+
+                order.index = cursor.getInt(cursor.getColumnIndex(DBConfig().CO_INDEX))
+
+                order.productName = cursor.getString(cursor.getColumnIndex(DBConfig().CO_PRODUCT_NAME))
+                order.orderDate = cursor.getString(cursor.getColumnIndex(DBConfig().CO_ORDER_DATE))
+                order.releaseSchedule = cursor.getString(cursor.getColumnIndex(DBConfig().CO_RELEASE_SCHEDULE))
+                order.coastPrice = cursor.getInt(cursor.getColumnIndex(DBConfig().CO_COAST_PRICE)).toString()
+                order.sellingPrice = cursor.getInt(cursor.getColumnIndex(DBConfig().CO_SELLING_PRICE)).toString()
+                order.releaseYN = cursor.getString(cursor.getColumnIndex(DBConfig().CO_RELEASE_YN))
+                order.productImage = cursor.getString(cursor.getColumnIndex(DBConfig().CO_PRODUCT_IMAGE))
+                order.shippingAddress = cursor.getString(cursor.getColumnIndex(DBConfig().CO_SHIPPING_ADDRESS))
+                order.accountName = cursor.getString(cursor.getColumnIndex(DBConfig().CO_ACCOUNT_NAME))
+                order.content = cursor.getString(cursor.getColumnIndex(DBConfig().CO_CONTENT))
+                order.color = cursor.getString(cursor.getColumnIndex(DBConfig().CO_COLOR))
+                order.size = cursor.getInt(cursor.getColumnIndex(DBConfig().CO_SIZE)).toString()
+                order.transform = cursor.getString(cursor.getColumnIndex(DBConfig().CO_TRANSFORM))
+                order.promiseDate = cursor.getString(cursor.getColumnIndex(DBConfig().CO_PROMISE_DATE))
+                order.other = cursor.getString(cursor.getColumnIndex(DBConfig().CO_OTHER))
 
                 orderList.add(order)
             }

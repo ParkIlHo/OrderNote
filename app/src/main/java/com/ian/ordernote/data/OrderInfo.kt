@@ -7,35 +7,35 @@ class OrderInfo {
     var mobile = ""
 
     // index
-    val index = -1
+    var index = -1
     //상품명
-    val productName = ""
+    var productName = ""
     //주문날짜
-    val orderDate = ""
+    var orderDate = ""
     //출고예정일
-    val releaseSchedule = ""
+    var releaseSchedule = ""
     //원가
-    val coasePrice = ""
+    var coastPrice = ""
     //판매금액
-    val sellingPrice = ""
+    var sellingPrice = ""
     //출고완료여부
-    val releaseYN = ""
+    var releaseYN = ""
     //상품이미지
-    val productImage = ""
+    var productImage = ""
     //배송주소
-    val shippingAddress = ""
+    var shippingAddress = ""
     //거래처명
-    val accountName = ""
+    var accountName = ""
     //함량
-    val content = ""
+    var content = ""
     //컬러
-    val color = ""
+    var color = ""
     //사이즈
-    val size = ""
+    var size = ""
     //변형
-    val transform = ""
+    var transform = ""
     //손님약속날짜
-    val promiseDate = ""
+    var promiseDate = ""
     //비고
     var other = ""
 }

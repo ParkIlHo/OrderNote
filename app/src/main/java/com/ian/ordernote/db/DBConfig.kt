@@ -76,7 +76,7 @@ class DBConfig {
             CO_RELEASE_SCHEDULE + " DATETIME," +
             CO_COAST_PRICE + " INT UNSIGNED NOT NULL DEFAULT '0'," +
             CO_SELLING_PRICE + " INT UNSIGNED NOT NULL DEFAULT '0'," +
-            CO_RELEASE_YN + " CHAR(1) NOT NULL DEFAULT N," +
+            CO_RELEASE_YN + " CHAR(1) NOT NULL DEFAULT 'N'," +
             CO_PRODUCT_IMAGE + " VARCHAR(500)," +
             CO_SHIPPING_ADDRESS + " VARCHAR(500)," +
             CO_ACCOUNT_NAME + " VARCHAR(20)," +
