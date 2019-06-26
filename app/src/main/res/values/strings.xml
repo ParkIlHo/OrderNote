@@ -12,6 +12,10 @@
     <string name="loading">Loading...</string>
     <string name="name">이름(상호)</string>
     <string name="mobile">핸드폰</string>
+    <string name="product_name">상품명</string>
+    <string name="order_date">주문날짜</string>
+    <string name="release_yn">출고</string>
+
 
     <!-- Password -->
     <string name="wrong_pw">비밀번호가 틀렸습니다!!!!</string>
@@ -26,6 +30,8 @@
     <!-- Order List -->
     <string name="title_order_list">주문내역</string>
     <string name="add_order">주문작성</string>
+    <string name="confirm_order">주문확인</string>
+    <string name="change_order">주문수정</string>
     <string name="label_product_name">상품명 :</string>
     <string name="label_order_date">주문날짜 :</string>
     <string name="label_release_date">출고예정일 :</string>
@@ -56,6 +62,7 @@
     <string name="hint_promise_date">손님과의 약속 날짜를 입력하세요.</string>
     <string name="cancel_add_order">작성중이던 주문내역 추가를 취소 하시겠습니까?</string>
     <string name="delete_order">선택하신 주문내역을 삭제 하시겠습니까??\n 이름(상호) : %1$s\n 핸드폰 : %2$s\n제품명 : %3$s</string>
+    <string name="order_check_msg">이름(상호)와 핸드폰 / 상품명은 필수 입력사항 입니다.\n필수 입력사항 입력을 확인 해 주세요.!!</string>
 
     <!-- Customer List -->
     <string name="title_custmer_list">주문자 정보</string>

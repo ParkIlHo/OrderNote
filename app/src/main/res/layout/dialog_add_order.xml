@@ -935,7 +935,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1">
                             <EditText
-                                    android:id="@+id/dialog_add_customer_other"
+                                    android:id="@+id/dialog_add_order_other"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:gravity="start"
@@ -947,7 +947,7 @@
                                     android:textColor="@color/string"
                                     android:textColorHint="@android:color/darker_gray"/>
                             <TextView
-                                    android:id="@+id/dialog_add_customer_other_text"
+                                    android:id="@+id/dialog_add_order_other_text"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:textSize="15dp"

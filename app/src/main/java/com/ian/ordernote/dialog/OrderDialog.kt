@@ -2,18 +2,17 @@ package com.ian.ordernote.dialog
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.ian.ordernote.CustomerListActivity
 import com.ian.ordernote.R
 import com.ian.ordernote.core.CommonAlertDialog
 import com.ian.ordernote.data.OrderInfo
 import com.ian.ordernote.db.DB
+import org.w3c.dom.Text
 
 class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChangeListener) : CommonAlertDialog(context), View.OnClickListener {
 
@@ -130,8 +129,19 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
     override fun onClick(view: View?) {
         when(view?.id) {
             R.id.dialog_add_order_cancel_btn -> { // Add cancel
-                if(isShowing) {
-                    dismiss()
+                if(isAdd) {
+                    if (isShowing) {
+                        dismiss()
+                    }
+                } else {
+                    // 수정중인 order info cancel popup
+                    showAlertDialog(mContext, "주문내역 수정을 취소하시겠습니까? 수정중이던 내용은 저장되지 않습니다.",
+                        mContext.getString(R.string.confirm),
+                        mContext.getString(R.string.cancel),
+                        DialogInterface.OnClickListener { dialogInterface, i ->
+                            setMode(false)
+                        },
+                        null)
                 }
             }
 
@@ -149,19 +159,31 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
                         if (mListener != null) {
                             mListener.onAdd()
                         }
-                        if (isShowing) {
-                            dismiss()
+                        if(isAdd) {
+                            if (isShowing) {
+                                dismiss()
+                            }
+                        } else {
+                            // edit mode -> 확인 모드로 전환
+                            setOrderInfoText(mOrderInfo)
+                            setMode(false)
                         }
                     }
                 }
             }
 
             R.id.dialog_add_order_change_btn -> { // 수정 버튼
+                mTempOrderInfo = mOrderInfo
 
+                setOrderInfoEdit(mTempOrderInfo)
+
+                setMode(true)
             }
 
             R.id.dialog_add_order_confirm_btn -> { // 확인 버튼
-
+                if (isShowing) {
+                    dismiss()
+                }
             }
         }
     }
@@ -175,7 +197,10 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
             mTempOrderInfo = OrderInfo()
         } else {
             mTempOrderInfo = mOrderInfo
+            setOrderInfoText(mOrderInfo)
+            mDialogView.findViewById<TextView>(R.id.dialog_add_order_title).setText(R.string.confirm_order)
         }
+        setMode(isAdd)
     }
 
     fun init() {
@@ -201,7 +226,11 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
         mOtherEdit.setText("")
     }
 
-    fun setOrderInfoEdit(orderInfo: OrderInfo) {
+    fun setOrderInfo(orderInfo: OrderInfo) {
+        mOrderInfo = orderInfo
+    }
+
+    private fun setOrderInfoEdit(orderInfo: OrderInfo) {
         mNameEdit.setText(orderInfo.name)
         mMobileEdit.setText(orderInfo.mobile)
         mEmailEdit.setText(orderInfo.email)
@@ -224,7 +253,7 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
         mOtherEdit.setText(orderInfo.other)
     }
 
-    fun setOrderInfoText(orderInfo: OrderInfo) {
+    private fun setOrderInfoText(orderInfo: OrderInfo) {
         mNameText.setText(orderInfo.name)
         mMobileText.setText(orderInfo.mobile)
         mEmailText.setText(orderInfo.email)
@@ -247,9 +276,109 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
         mOtherText.setText(orderInfo.other)
     }
 
-    fun saveOrderInfo(): Long {
+    private fun setMode(isAdd : Boolean) {
+        if(isAdd) {
+            if(!this.isAdd) {
+                mDialogView.findViewById<TextView>(R.id.dialog_add_order_title).setText(R.string.change_order)
+            }
+            mDialogView.findViewById<LinearLayout>(R.id.dailog_add_order_add_btn_layout).visibility = View.VISIBLE
+            mDialogView.findViewById<LinearLayout>(R.id.dailog_add_order_detail_btn_layout).visibility = View.GONE
+
+            mNameEdit.visibility = View.VISIBLE
+            mMobileEdit.visibility = View.VISIBLE
+            mEmailEdit.visibility = View.VISIBLE
+            mTelEdit.visibility = View.VISIBLE
+            mProductNameEdit.visibility = View.VISIBLE
+            mOrderDateEdit.visibility = View.VISIBLE
+            mReleaseDateEdit.visibility = View.VISIBLE
+            mCoastPriceEdit.visibility = View.VISIBLE
+            mSellingPriceEdit.visibility = View.VISIBLE
+            mReleaseEdit.visibility = View.VISIBLE
+            mProduceImageEdit.visibility = View.VISIBLE
+            mShippingAddressEdit.visibility = View.VISIBLE
+            mAccountNameEdit.visibility = View.VISIBLE
+            mContentsEdit.visibility = View.VISIBLE
+            mColorEdit.visibility = View.VISIBLE
+            mSizeEdit.visibility = View.VISIBLE
+            mTransformEdit.visibility = View.VISIBLE
+            mPromiseDateEdit.visibility = View.VISIBLE
+            mOtherEdit.visibility = View.VISIBLE
+
+            mNameText.visibility = View.GONE
+            mMobileText.visibility = View.GONE
+            mEmailText.visibility = View.GONE
+            mTelText.visibility = View.GONE
+            mProductNameText.visibility = View.GONE
+            mOrderDateText.visibility = View.GONE
+            mReleaseDateText.visibility = View.GONE
+            mCoastPriceText.visibility = View.GONE
+            mSellingPriceText.visibility = View.GONE
+            mReleaseText.visibility = View.GONE
+            mProduceImageText.visibility = View.GONE
+            mShippingAddressText.visibility = View.GONE
+            mAccountNameText.visibility = View.GONE
+            mContentsText.visibility = View.GONE
+            mColorText.visibility = View.GONE
+            mSizeText.visibility = View.GONE
+            mTransformText.visibility = View.GONE
+            mPromiseDateText.visibility = View.GONE
+            mOtherText.visibility = View.GONE
+        } else {
+            if(!this.isAdd) {
+                mDialogView.findViewById<TextView>(R.id.dialog_add_order_title).setText(R.string.confirm_order)
+            }
+            mDialogView.findViewById<LinearLayout>(R.id.dailog_add_order_add_btn_layout).visibility = View.GONE
+            mDialogView.findViewById<LinearLayout>(R.id.dailog_add_order_detail_btn_layout).visibility = View.VISIBLE
+
+            mNameEdit.visibility = View.GONE
+            mMobileEdit.visibility = View.GONE
+            mEmailEdit.visibility = View.GONE
+            mTelEdit.visibility = View.GONE
+            mProductNameEdit.visibility = View.GONE
+            mOrderDateEdit.visibility = View.GONE
+            mReleaseDateEdit.visibility = View.GONE
+            mCoastPriceEdit.visibility = View.GONE
+            mSellingPriceEdit.visibility = View.GONE
+            mReleaseEdit.visibility = View.GONE
+            mProduceImageEdit.visibility = View.GONE
+            mShippingAddressEdit.visibility = View.GONE
+            mAccountNameEdit.visibility = View.GONE
+            mContentsEdit.visibility = View.GONE
+            mColorEdit.visibility = View.GONE
+            mSizeEdit.visibility = View.GONE
+            mTransformEdit.visibility = View.GONE
+            mPromiseDateEdit.visibility = View.GONE
+            mOtherEdit.visibility = View.GONE
+
+            mNameText.visibility = View.VISIBLE
+            mMobileText.visibility = View.VISIBLE
+            mEmailText.visibility = View.VISIBLE
+            mTelText.visibility = View.VISIBLE
+            mProductNameText.visibility = View.VISIBLE
+            mOrderDateText.visibility = View.VISIBLE
+            mReleaseDateText.visibility = View.VISIBLE
+            mCoastPriceText.visibility = View.VISIBLE
+            mSellingPriceText.visibility = View.VISIBLE
+            mReleaseText.visibility = View.VISIBLE
+            mProduceImageText.visibility = View.VISIBLE
+            mShippingAddressText.visibility = View.VISIBLE
+            mAccountNameText.visibility = View.VISIBLE
+            mContentsText.visibility = View.VISIBLE
+            mColorText.visibility = View.VISIBLE
+            mSizeText.visibility = View.VISIBLE
+            mTransformText.visibility = View.VISIBLE
+            mPromiseDateText.visibility = View.VISIBLE
+            mOtherText.visibility = View.VISIBLE
+        }
+    }
+
+    private fun saveOrderInfo(): Long {
         var orderInfo = OrderInfo()
         var result: Long
+
+        if(!isAdd && mOrderInfo != null) {
+            orderInfo.index = mOrderInfo.index
+        }
 
         orderInfo.name = mNameEdit.text.toString()
         orderInfo.mobile = mMobileEdit.text.toString()
@@ -278,6 +407,8 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
         if(result < 0) {
             // 저장오류
             Toast.makeText(mContext, "db 저장오류", Toast.LENGTH_SHORT).show()
+        } else {
+            mOrderInfo = orderInfo
         }
 
         return result

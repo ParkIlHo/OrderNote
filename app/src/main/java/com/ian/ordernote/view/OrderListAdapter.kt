@@ -14,8 +14,10 @@ import com.ian.ordernote.R
 import com.ian.ordernote.data.CustomerInfo
 import com.ian.ordernote.data.OrderInfo
 import com.ian.ordernote.db.DB
+import com.ian.ordernote.dialog.OrderDialog
 
 class OrderListAdapter(val context: Context, var orderList: ArrayList<OrderInfo>, val listener: CustomerListActivity.CustomerChangeListener) : BaseAdapter() {
+
     override fun getItem(position: Int): Any {
         return orderList[position]
     }
@@ -60,6 +62,15 @@ class OrderListAdapter(val context: Context, var orderList: ArrayList<OrderInfo>
                     //cancel
                 }
                 .show()
+        }
+
+        view.setOnClickListener { view: View ->
+
+            var orderDialog = OrderDialog(context, listener)
+
+            orderDialog.isAdd = false
+            orderDialog.setOrderInfo(orderInfo)
+            orderDialog.show()
         }
 
 //        view.setOnClickListener { view : View ->
