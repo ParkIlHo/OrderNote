@@ -1,20 +1,25 @@
 package com.ian.ordernote.dialog
 
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.os.Build
 import android.text.TextUtils
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.widget.*
 import com.ian.ordernote.CustomerListActivity
+import com.ian.ordernote.OrderListActivity
 import com.ian.ordernote.R
 import com.ian.ordernote.core.CommonAlertDialog
 import com.ian.ordernote.data.OrderInfo
 import com.ian.ordernote.db.DB
 import org.w3c.dom.Text
+import java.util.*
 
-class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChangeListener) : CommonAlertDialog(context), View.OnClickListener {
+class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChangeListener) : CommonAlertDialog(context), View.OnClickListener, View.OnTouchListener {
 
     var isAdd = true
     lateinit var mOrderInfo: OrderInfo
@@ -26,6 +31,14 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
     lateinit var mListener: CustomerListActivity.CustomerChangeListener
 
     var mDb : DB? = null
+
+    var datePickerMode = -1
+
+    val DATE_PICKER_ORDER   = 0
+    val DATE_PICKER_RELEASE = 1
+    val DATE_PICKER_PROMISE = 2
+
+    var datePickerDialog: DatePickerDialog? = null
 
     lateinit var mNameEdit: EditText
     lateinit var mMobileEdit: EditText
@@ -119,6 +132,16 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
         mDialogView.findViewById<Button>(R.id.dialog_add_order_save_btn).setOnClickListener(this)
         mDialogView.findViewById<Button>(R.id.dialog_add_order_confirm_btn).setOnClickListener(this)
         mDialogView.findViewById<Button>(R.id.dialog_add_order_change_btn).setOnClickListener(this)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mOrderDateEdit.showSoftInputOnFocus = false
+            mOrderDateEdit.showSoftInputOnFocus = false
+            mOrderDateEdit.showSoftInputOnFocus = false
+        }
+
+        mOrderDateEdit.setOnTouchListener(this)
+        mReleaseDateEdit.setOnTouchListener(this)
+        mPromiseDateEdit.setOnTouchListener(this)
     }
 
     override fun dismiss() {
@@ -186,6 +209,37 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
                 }
             }
         }
+    }
+
+    override fun onTouch(view: View?, motionEvent: MotionEvent?): Boolean {
+        when (motionEvent?.action) {
+            MotionEvent.ACTION_DOWN -> {
+
+            }
+
+            MotionEvent.ACTION_UP -> {
+                when (view?.id) {
+                    R.id.dialog_add_order_date -> { // 주문 날짜 클릭
+                        datePickerMode = DATE_PICKER_ORDER
+
+                        showDatePicker()
+                    }
+
+                    R.id.dialog_add_order_release_schedule -> { // 출고 날짜 클릭
+                        datePickerMode = DATE_PICKER_RELEASE
+
+                        showDatePicker()
+                    }
+
+                    R.id.dialog_add_order_promise_date -> { // 약속 날짜 클릭
+                        datePickerMode = DATE_PICKER_PROMISE
+
+                        showDatePicker()
+                    }
+                }
+            }
+        }
+        return true
     }
 
     override fun show() {
@@ -412,5 +466,48 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
         }
 
         return result
+    }
+
+    private fun showDatePicker() {
+        var date = ""
+
+        var year = -1
+        var month = -1
+        var day = -1
+        if(datePickerMode == DATE_PICKER_ORDER) {
+            date = mOrderDateEdit.text.toString()
+        } else if(datePickerMode == DATE_PICKER_RELEASE) {
+            date = mReleaseDateEdit.text.toString()
+        } else {
+            date = mPromiseDateEdit.text.toString()
+        }
+
+        if(TextUtils.isEmpty(date)) {
+            val timeZone = TimeZone.getTimeZone("Asia/Seoul")
+            val calendar = GregorianCalendar(timeZone)
+
+            year = calendar.get(GregorianCalendar.YEAR)
+            month = calendar.get(GregorianCalendar.MONTH)
+            day = calendar.get(GregorianCalendar.DATE)
+        }
+
+        if(datePickerDialog != null && datePickerDialog!!.isShowing) {
+            datePickerDialog!!.dismiss()
+        }
+
+        datePickerDialog = DatePickerDialog(mContext, DatePickerDialog.OnDateSetListener { datePicker, y, m, d ->
+
+            var selectDate = "${y}.${m}.${d}"
+
+            if(datePickerMode == DATE_PICKER_ORDER) {
+                mOrderDateEdit.setText(selectDate)
+            } else if(datePickerMode == DATE_PICKER_RELEASE) {
+                mReleaseDateEdit.setText(selectDate)
+            } else {
+                mPromiseDateEdit.setText(selectDate)
+            }
+        }, year, month, day)
+
+        datePickerDialog!!.show()
     }
 }
