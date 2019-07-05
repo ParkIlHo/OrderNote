@@ -17,6 +17,8 @@ import com.ian.ordernote.core.CommonAlertDialog
 import com.ian.ordernote.data.OrderInfo
 import com.ian.ordernote.db.DB
 import org.w3c.dom.Text
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.*
 
 class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChangeListener) : CommonAlertDialog(context), View.OnClickListener, View.OnTouchListener {
@@ -489,6 +491,25 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
             year = calendar.get(GregorianCalendar.YEAR)
             month = calendar.get(GregorianCalendar.MONTH)
             day = calendar.get(GregorianCalendar.DATE)
+        } else {
+            var da: Date? = null
+            try {
+                da = SimpleDateFormat("yyyy.MM.dd").parse(date)
+                var calendar = Calendar.getInstance()
+                calendar.time = da
+                year = calendar.get(GregorianCalendar.YEAR)
+                month = calendar.get(GregorianCalendar.MONTH)
+                day = calendar.get(GregorianCalendar.DATE)
+
+            } catch (e: ParseException) {
+                e.printStackTrace()
+                val timeZone = TimeZone.getTimeZone("Asia/Seoul")
+                val calendar = GregorianCalendar(timeZone)
+
+                year = calendar.get(GregorianCalendar.YEAR)
+                month = calendar.get(GregorianCalendar.MONTH)
+                day = calendar.get(GregorianCalendar.DATE)
+            }
         }
 
         if(datePickerDialog != null && datePickerDialog!!.isShowing) {
@@ -497,7 +518,7 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
 
         datePickerDialog = DatePickerDialog(mContext, DatePickerDialog.OnDateSetListener { datePicker, y, m, d ->
 
-            var selectDate = "${y}.${m}.${d}"
+            var selectDate = "${y}.${m+1}.${d}"
 
             if(datePickerMode == DATE_PICKER_ORDER) {
                 mOrderDateEdit.setText(selectDate)
