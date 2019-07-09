@@ -12,18 +12,23 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import com.ian.ordernote.core.CommonActivity
 import com.ian.ordernote.core.OrderNotePrefs
 import com.ian.ordernote.util.ContextExtentions
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_password.*
 
-class PasswordActivity: AppCompatActivity(), View.OnClickListener {
+class PasswordActivity: CommonActivity(), View.OnClickListener {
+
+    var isIntentLock = false
 
     var prefs: OrderNotePrefs? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_password)
+
+        isIntentLock = intent.getBooleanExtra(INTENT_KEY_LOCK, false)
 
         init()
     }
@@ -36,9 +41,12 @@ class PasswordActivity: AppCompatActivity(), View.OnClickListener {
         Log.e("151515", "curPw = $curPw, inputPw = $inputPw")
 
         if(curPw.equals(inputPw)) {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
+            if(isIntentLock) {
+                finish()
+            } else {
+                val intent = Intent(this, MainActivity::class.java)
+                goActivity(intent, true)
+            }
         } else {
             // Password error
             // EditText 초기화

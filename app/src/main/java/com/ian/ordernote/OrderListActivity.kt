@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.ian.ordernote.core.CommonActivity
 import com.ian.ordernote.db.DB
 import com.ian.ordernote.dialog.OrderDialog
 import com.ian.ordernote.view.CustomerListAdapter
@@ -17,7 +18,7 @@ import com.ian.ordernote.view.OrderListAdapter
 import kotlinx.android.synthetic.main.activity_customer_list.*
 import kotlinx.android.synthetic.main.activity_order_list.*
 
-class OrderListActivity: AppCompatActivity() {
+class OrderListActivity: CommonActivity() {
 
     var mDb : DB? = null
     lateinit var mAdapter: OrderListAdapter

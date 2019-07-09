@@ -3,9 +3,10 @@ package com.ian.ordernote
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import com.ian.ordernote.core.CommonActivity
 import kotlinx.android.synthetic.main.activity_setting.*
 
-class SettingActivity: AppCompatActivity() {
+class SettingActivity: CommonActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

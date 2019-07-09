@@ -13,13 +13,14 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.ian.ordernote.core.CommonActivity
 import com.ian.ordernote.data.CustomerInfo
 import com.ian.ordernote.db.DB
 import com.ian.ordernote.view.CustomerListAdapter
 import kotlinx.android.synthetic.main.activity_customer_list.*
 import java.util.*
 
-class CustomerListActivity: AppCompatActivity() {
+class CustomerListActivity: CommonActivity() {
 
     var mDb : DB? = null
     lateinit var mAdapter: CustomerListAdapter

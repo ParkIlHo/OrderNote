@@ -7,8 +7,9 @@ import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import com.ian.ordernote.core.CommonActivity
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : CommonActivity() {
 
     private val REQUEST_PERMISSIONS = 100
 
