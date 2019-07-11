@@ -15,6 +15,8 @@
     <string name="product_name">상품명</string>
     <string name="order_date">주문날짜</string>
     <string name="release_yn">출고</string>
+    <string name="change2">변경</string>
+    <string name="second">초</string>
 
 
     <!-- Password -->
@@ -88,6 +90,10 @@
     <string name="delete_customer">선택하신 주문자 정보를 삭제 하시겠습니까??\n 이름(상호) : %1$s\n 핸드폰 : %2$s</string>
     <string name="change_customer_msg">선택하신 주문자 정보를 변경 하시겠습니까??</string>
     <string name="duplication_customer_msg">핸드폰 번호가 동일한 주문자가 있습니다. 핸드폰 번호 확인 바랍니다.</string>
+
     <!-- 설정 -->
+    <string name="setting_password_lable">비밀번호 :</string>
+    <string name="setting_app_lock">화면잠금 기능 :</string>
+    <string name="setting_app_lock_time">잠금시간 설정 :</string>
 
 </resources>
