@@ -22,6 +22,8 @@
     <!-- Password -->
     <string name="wrong_pw">비밀번호가 틀렸습니다!!!!</string>
     <string name="input_pw">비밀번호 입력</string>
+    <string name="input_new_pw">새 비밀번호 입력</string>
+    <string name="input_new_pw_confirm">새 비밀번호 확인</string>
     <string name="noti_pw">초기 비밀번호는 0000 입니다.</string>
 
     <!-- Main -->
@@ -95,5 +97,15 @@
     <string name="setting_password_lable">비밀번호 :</string>
     <string name="setting_app_lock">화면잠금 기능 :</string>
     <string name="setting_app_lock_time">잠금시간 설정 :</string>
+    <string name="setting_change_password">비밀번호 변경</string>
+    <string name="setting_current_password">현재 비밀번호 :</string>
+    <string name="setting_new_password">새 비밀번호 :</string>
+    <string name="setting_new_password_confirm">새 비밀번호 확인 :</string>
+    <string name="setting_input_password">비밀번호를 입력해 주세요.!!!</string>
+    <string name="setting_input_new_password">새 비밀번호를 입력해 주세요.!!!</string>
+    <string name="setting_input_confirm_password">확인 비밀번호를 입력해 주세요.!!!</string>
+    <string name="setting_error_password">비밀번호가 틀렸습니다.</string>
+    <string name="setting_error_new_password">새 비밀번호와 확인 비밀번호가 일치하지 않습니다.</string>
+    <string name="setting_complete_password">비밀번호가 정상적으로 변경되었습니다.</string>
 
 </resources>

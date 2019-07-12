@@ -15,6 +15,7 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".SplashActivity"
+                  android:launchMode="singleTop"
                   android:windowSoftInputMode="stateAlwaysHidden"
                   android:theme="@style/Theme.AppCompat.NoActionBar"
                   android:screenOrientation="portrait">
@@ -26,11 +27,13 @@
         </activity>
 
         <activity android:name=".PasswordActivity"
+                  android:launchMode="singleTop"
                   android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
                   android:screenOrientation="portrait">
         </activity>
 
         <activity android:name=".MainActivity"
+                  android:launchMode="singleTop"
                   android:windowSoftInputMode="stateAlwaysHidden"
                   android:theme="@style/Theme.AppCompat.NoActionBar"
                   android:screenOrientation="portrait">
@@ -42,18 +45,21 @@
         </activity>
 
         <activity android:name=".OrderListActivity"
+                  android:launchMode="singleTop"
                   android:windowSoftInputMode="stateAlwaysHidden"
                   android:theme="@style/Theme.AppCompat.NoActionBar"
                   android:screenOrientation="portrait">
         </activity>
 
         <activity android:name=".CustomerListActivity"
+                  android:launchMode="singleTop"
                   android:windowSoftInputMode="stateAlwaysHidden"
                   android:theme="@style/Theme.AppCompat.NoActionBar"
                   android:screenOrientation="portrait">
         </activity>
 
         <activity android:name=".SettingActivity"
+                  android:launchMode="singleTop"
                   android:windowSoftInputMode="stateAlwaysHidden"
                   android:theme="@style/Theme.AppCompat.NoActionBar"
                   android:screenOrientation="portrait">
