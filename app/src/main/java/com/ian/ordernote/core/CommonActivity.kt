@@ -1,6 +1,8 @@
 package com.ian.ordernote.core
 
 import android.content.Intent
+import android.os.Bundle
+import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.ian.ordernote.MainActivity
@@ -10,9 +12,16 @@ import com.ian.ordernote.SplashActivity
 open class CommonActivity: AppCompatActivity() {
 
     protected var isLock = false
-    protected val lockTime = 1000*60
+    protected var lockTime = 30
+
+    protected var prefs: OrderNotePrefs? = null
 
     protected val INTENT_KEY_LOCK = "intent_key_lock"
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        prefs = OrderNotePrefs(this)
+    }
 
     override fun onPause() {
         super.onPause()
@@ -32,9 +41,10 @@ open class CommonActivity: AppCompatActivity() {
         var current = System.currentTimeMillis()
         var pauseTime = OrderNotePrefs(applicationContext).pauseTime
 
-        if(this is SplashActivity || this is PasswordActivity) {
+        if(this is SplashActivity || this is PasswordActivity || !prefs?.isScreenLock!!) {
             isLock = false
         } else {
+            lockTime = prefs?.screenLockTime!!*1000
             if(pauseTime <= 0) {
                 isLock = false
             } else if((current - pauseTime) > lockTime) {

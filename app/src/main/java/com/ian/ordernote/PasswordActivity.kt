@@ -22,8 +22,6 @@ class PasswordActivity: CommonActivity(), View.OnClickListener {
 
     var isIntentLock = false
 
-    var prefs: OrderNotePrefs? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_password)
@@ -58,7 +56,6 @@ class PasswordActivity: CommonActivity(), View.OnClickListener {
     }
 
     fun init() {
-        prefs = OrderNotePrefs(this)
         password.addTextChangedListener(object : TextWatcher{
             override fun onTextChanged(input: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
