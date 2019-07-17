@@ -52,6 +52,9 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
     lateinit var mCoastPriceEdit: EditText
     lateinit var mSellingPriceEdit: EditText
     lateinit var mReleaseEdit: EditText
+    lateinit var mReleaseLayout: RadioGroup
+    lateinit var mReleaseY: RadioButton
+    lateinit var mReleaseN: RadioButton
     lateinit var mProduceImageEdit: EditText
     lateinit var mShippingAddressEdit: EditText
     lateinit var mAccountNameEdit: EditText
@@ -100,6 +103,9 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
         mCoastPriceEdit = mDialogView.findViewById(R.id.dialog_add_order_coast_price)
         mSellingPriceEdit = mDialogView.findViewById(R.id.dialog_add_order_selling_price)
         mReleaseEdit = mDialogView.findViewById(R.id.dialog_add_order_release)
+        mReleaseLayout = mDialogView.findViewById(R.id.dialog_add_order_release_layout)
+        mReleaseY = mDialogView.findViewById(R.id.dialog_add_order_release_y)
+        mReleaseN = mDialogView.findViewById(R.id.dialog_add_order_release_n)
         mProduceImageEdit = mDialogView.findViewById(R.id.dialog_add_order_product_image)
         mShippingAddressEdit = mDialogView.findViewById(R.id.dialog_add_order_shipping_address)
         mAccountNameEdit = mDialogView.findViewById(R.id.dialog_add_order_account_name)
@@ -144,6 +150,19 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
         mOrderDateEdit.setOnTouchListener(this)
         mReleaseDateEdit.setOnTouchListener(this)
         mPromiseDateEdit.setOnTouchListener(this)
+
+        mReleaseN.setOnCheckedChangeListener { view, isChecked ->
+            if(isChecked) {
+                mOrderInfo.releaseYN = "N"
+            }
+        }
+
+        mReleaseY.setOnCheckedChangeListener { view, isChecked ->
+            if(isChecked) {
+                mOrderInfo.releaseYN = "Y"
+            }
+        }
+
     }
 
     override fun dismiss() {
@@ -248,9 +267,9 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
         super.show()
 
         if(isAdd) {
-            init()
             mOrderInfo = OrderInfo()
             mTempOrderInfo = OrderInfo()
+            init()
         } else {
             mTempOrderInfo = mOrderInfo
             setOrderInfoText(mOrderInfo)
@@ -271,6 +290,16 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
         mCoastPriceEdit.setText("")
         mSellingPriceEdit.setText("")
         mReleaseEdit.setText("")
+        if(mOrderInfo == null || TextUtils.isEmpty(mOrderInfo.releaseYN)) {
+
+            mReleaseN.isChecked = true
+        } else {
+            if(mOrderInfo.releaseYN.equals("Y")) {
+                mReleaseY.isChecked = true
+            } else {
+                mReleaseN.isChecked = true
+            }
+        }
         mProduceImageEdit.setText("")
         mShippingAddressEdit.setText("")
         mAccountNameEdit.setText("")
@@ -298,6 +327,15 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
         mCoastPriceEdit.setText(orderInfo.coastPrice)
         mSellingPriceEdit.setText(orderInfo.sellingPrice)
         mReleaseEdit.setText(orderInfo.releaseYN)
+        if(mOrderInfo == null || TextUtils.isEmpty(mOrderInfo.releaseYN)) {
+            mReleaseN.isChecked = true
+        } else {
+            if(mOrderInfo.releaseYN.equals("Y")) {
+                mReleaseY.isChecked = true
+            } else {
+                mReleaseN.isChecked = true
+            }
+        }
         mProduceImageEdit.setText(orderInfo.productImage)
         mShippingAddressEdit.setText(orderInfo.shippingAddress)
         mAccountNameEdit.setText(orderInfo.accountName)
@@ -349,7 +387,7 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
             mReleaseDateEdit.visibility = View.VISIBLE
             mCoastPriceEdit.visibility = View.VISIBLE
             mSellingPriceEdit.visibility = View.VISIBLE
-            mReleaseEdit.visibility = View.VISIBLE
+            mReleaseLayout.visibility = View.VISIBLE
             mProduceImageEdit.visibility = View.VISIBLE
             mShippingAddressEdit.visibility = View.VISIBLE
             mAccountNameEdit.visibility = View.VISIBLE
@@ -395,7 +433,7 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
             mReleaseDateEdit.visibility = View.GONE
             mCoastPriceEdit.visibility = View.GONE
             mSellingPriceEdit.visibility = View.GONE
-            mReleaseEdit.visibility = View.GONE
+            mReleaseLayout.visibility = View.GONE
             mProduceImageEdit.visibility = View.GONE
             mShippingAddressEdit.visibility = View.GONE
             mAccountNameEdit.visibility = View.GONE
@@ -447,6 +485,11 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
         orderInfo.coastPrice = mCoastPriceEdit.text.toString()
         orderInfo.sellingPrice = mSellingPriceEdit.text.toString()
         orderInfo.releaseYN = mReleaseEdit.text.toString()
+        if(mReleaseY.isChecked) {
+            orderInfo.releaseYN = "Y"
+        } else {
+            orderInfo.releaseYN = "N"
+        }
         orderInfo.productImage = mProduceImageEdit.text.toString()
         orderInfo.shippingAddress = mShippingAddressEdit.text.toString()
         orderInfo.accountName = mAccountNameEdit.text.toString()
