@@ -4,7 +4,6 @@ class OrderInfo {
     var name = ""
     var email = ""
     var tel = ""
-    var mobile = ""
 
     // index
     var index = -1

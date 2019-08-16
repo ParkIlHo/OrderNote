@@ -37,13 +37,13 @@ class CustomerListAdapter(val context: Context, var customerList: ArrayList<Cust
         var customerInfo = customerList[position]
 
         name.text = customerInfo.name
-        mobile.text = customerInfo.mobile
+        mobile.text = customerInfo.tel
 
         delBtn.setOnClickListener { view: View ->
             val builder2 = AlertDialog.Builder(context)
 
             builder2
-                .setMessage(context.getString(R.string.delete_customer, customerInfo.name, customerInfo.mobile))
+                .setMessage(context.getString(R.string.delete_customer, customerInfo.name, customerInfo.tel))
                 .setPositiveButton(R.string.delete) { dialogInterface: DialogInterface?, i: Int ->
                     //delete
                     DB(context).getInstance(context).delCustomer(customerInfo)
@@ -75,8 +75,6 @@ class CustomerListAdapter(val context: Context, var customerList: ArrayList<Cust
 
             val nameEdit = dialogView.findViewById<EditText>(R.id.dialog_add_customer_name)
             val nameText = dialogView.findViewById<TextView>(R.id.dialog_add_customer_name_text)
-            val mobileEdit = dialogView.findViewById<EditText>(R.id.dialog_add_customer_mobile)
-            val mobileText = dialogView.findViewById<TextView>(R.id.dialog_add_customer_mobile_text)
             val telEdit = dialogView.findViewById<EditText>(R.id.dialog_add_customer_tel)
             val telText = dialogView.findViewById<TextView>(R.id.dialog_add_customer_tel_text)
             val emailEdit = dialogView.findViewById<EditText>(R.id.dialog_add_customer_email)
@@ -89,13 +87,11 @@ class CustomerListAdapter(val context: Context, var customerList: ArrayList<Cust
 
             fun setText() {
                 nameEdit.setText(tempCustomerInfo.name)
-                mobileEdit.setText(tempCustomerInfo.mobile)
                 telEdit.setText(tempCustomerInfo.tel)
                 emailEdit.setText(tempCustomerInfo.email)
                 otherEdit.setText(tempCustomerInfo.other)
 
                 nameText.setText(tempCustomerInfo.name)
-                mobileText.setText(tempCustomerInfo.mobile)
                 telText.setText(tempCustomerInfo.tel)
                 emailText.setText(tempCustomerInfo.email)
                 otherText.setText(tempCustomerInfo.other)
@@ -103,7 +99,6 @@ class CustomerListAdapter(val context: Context, var customerList: ArrayList<Cust
 
             fun setCustomerInfo() {
                 tempCustomerInfo.name = nameEdit.text.toString()
-                tempCustomerInfo.mobile = mobileEdit.text.toString()
                 tempCustomerInfo.tel = telEdit.text.toString()
                 tempCustomerInfo.email = emailEdit.text.toString()
                 tempCustomerInfo.other = otherEdit.text.toString()
@@ -117,13 +112,11 @@ class CustomerListAdapter(val context: Context, var customerList: ArrayList<Cust
                         dialogBtnLayout.visibility = View.GONE
 
                         nameEdit.visibility = View.GONE
-                        mobileEdit.visibility = View.GONE
                         telEdit.visibility = View.GONE
                         emailEdit.visibility = View.GONE
                         otherEdit.visibility = View.GONE
 
                         nameText.visibility = View.VISIBLE
-                        mobileText.visibility = View.VISIBLE
                         telText.visibility = View.VISIBLE
                         emailText.visibility = View.VISIBLE
                         otherText.visibility = View.VISIBLE
@@ -134,13 +127,11 @@ class CustomerListAdapter(val context: Context, var customerList: ArrayList<Cust
                         dialogBtnLayout.visibility = View.VISIBLE
 
                         nameEdit.visibility = View.VISIBLE
-                        mobileEdit.visibility = View.VISIBLE
                         telEdit.visibility = View.VISIBLE
                         emailEdit.visibility = View.VISIBLE
                         otherEdit.visibility = View.VISIBLE
 
                         nameText.visibility = View.GONE
-                        mobileText.visibility = View.GONE
                         telText.visibility = View.GONE
                         emailText.visibility = View.GONE
                         otherText.visibility = View.GONE
@@ -175,9 +166,9 @@ class CustomerListAdapter(val context: Context, var customerList: ArrayList<Cust
                 val builder2 = AlertDialog.Builder(context)
 
                 //필수 입력사항 체크
-                if(!TextUtils.isEmpty(nameEdit.text) && !TextUtils.isEmpty(mobileEdit.text)) { // 필수 입력사항 완료
+                if(!TextUtils.isEmpty(nameEdit.text) && !TextUtils.isEmpty(telEdit.text)) { // 필수 입력사항 완료
                     builder2
-                        .setMessage(context.getString(R.string.save_change_customer, nameEdit.text, mobileEdit.text))
+                        .setMessage(context.getString(R.string.save_change_customer, nameEdit.text, telEdit.text))
                         .setPositiveButton(R.string.confirm) { dialogInterface: DialogInterface?, i: Int ->
 
                             setCustomerInfo()

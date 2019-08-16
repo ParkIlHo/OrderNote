@@ -66,7 +66,6 @@ class CustomerListActivity: CommonActivity() {
                 val dialogCancelBtn = dialogView.findViewById<Button>(R.id.dialog_add_customer_cancel_btn)
 
                 val nameEdit = dialogView.findViewById<EditText>(R.id.dialog_add_customer_name)
-                val mobileEdit = dialogView.findViewById<EditText>(R.id.dialog_add_customer_mobile)
                 val telEdit = dialogView.findViewById<EditText>(R.id.dialog_add_customer_tel)
                 val emailEdit = dialogView.findViewById<EditText>(R.id.dialog_add_customer_email)
                 val otherEdit = dialogView.findViewById<EditText>(R.id.dialog_add_customer_other)
@@ -81,19 +80,18 @@ class CustomerListActivity: CommonActivity() {
                     val builder2 = AlertDialog.Builder(this)
 
                     //필수 입력사항 체크
-                    if(!TextUtils.isEmpty(nameEdit.text) && !TextUtils.isEmpty(mobileEdit.text)) { // 필수 입력사항 완료
+                    if(!TextUtils.isEmpty(nameEdit.text) && !TextUtils.isEmpty(telEdit.text)) { // 필수 입력사항 완료
                         builder2
-                            .setMessage(getString(R.string.save_add_customer, nameEdit.text, mobileEdit.text))
+                            .setMessage(getString(R.string.save_add_customer, nameEdit.text, telEdit.text))
                             .setPositiveButton(R.string.confirm) { dialogInterface: DialogInterface?, i: Int ->
 
                                 var customer = CustomerInfo()
                                 customer.name = nameEdit.text.toString()
-                                customer.mobile = mobileEdit.text.toString()
                                 customer.tel = telEdit.text.toString()
                                 customer.email = emailEdit.text.toString()
                                 customer.other = otherEdit.text.toString()
 
-                                if(mDb?.getCustomer(customer.mobile)?.size!! > 0) {
+                                if(mDb?.getCustomer(customer.tel)?.size!! > 0) {
                                     Toast.makeText(this, getString(R.string.duplication_customer_msg), Toast.LENGTH_SHORT).show()
                                 } else {
                                     var result = mDb?.setCustomer(customer)

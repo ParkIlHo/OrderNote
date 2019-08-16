@@ -43,7 +43,6 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
     var datePickerDialog: DatePickerDialog? = null
 
     lateinit var mNameEdit: EditText
-    lateinit var mMobileEdit: EditText
     lateinit var mTelEdit: EditText
     lateinit var mEmailEdit: EditText
     lateinit var mProductNameEdit: EditText
@@ -66,7 +65,6 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
     lateinit var mOtherEdit: EditText
 
     lateinit var mNameText: TextView
-    lateinit var mMobileText: TextView
     lateinit var mTelText: TextView
     lateinit var mEmailText: TextView
     lateinit var mProductNameText: TextView
@@ -94,7 +92,6 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
         setView(mDialogView)
 
         mNameEdit = mDialogView.findViewById(R.id.dialog_add_order_name)
-        mMobileEdit = mDialogView.findViewById(R.id.dialog_add_order_mobile)
         mTelEdit = mDialogView.findViewById(R.id.dialog_add_order_tel)
         mEmailEdit = mDialogView.findViewById(R.id.dialog_add_order_email)
         mProductNameEdit = mDialogView.findViewById(R.id.dialog_add_order_product_name)
@@ -117,7 +114,6 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
         mOtherEdit = mDialogView.findViewById(R.id.dialog_add_order_other)
 
         mNameText = mDialogView.findViewById(R.id.dialog_add_order_name_text)
-        mMobileText= mDialogView.findViewById(R.id.dialog_add_order_mobile_text)
         mTelText = mDialogView.findViewById(R.id.dialog_add_order_tel_text)
         mEmailText = mDialogView.findViewById(R.id.dialog_add_order_email_text)
         mProductNameText = mDialogView.findViewById(R.id.dialog_add_order_product_name_text)
@@ -192,7 +188,7 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
             R.id.dialog_add_order_save_btn -> { // Add 저장
 
                 if(TextUtils.isEmpty(mNameEdit.text)
-                    || TextUtils.isEmpty(mMobileEdit.text)
+                    || TextUtils.isEmpty(mTelEdit.text)
                     || TextUtils.isEmpty(mProductNameEdit.text)) {
                     showAlertDialog(mContext,
                         mContext.getString(R.string.order_check_msg),
@@ -280,7 +276,6 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
 
     fun init() {
         mNameEdit.setText("")
-        mMobileEdit.setText("")
         mEmailEdit.setText("")
         mTelEdit.setText("")
 
@@ -317,7 +312,6 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
 
     private fun setOrderInfoEdit(orderInfo: OrderInfo) {
         mNameEdit.setText(orderInfo.name)
-        mMobileEdit.setText(orderInfo.mobile)
         mEmailEdit.setText(orderInfo.email)
         mTelEdit.setText(orderInfo.tel)
 
@@ -349,7 +343,6 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
 
     private fun setOrderInfoText(orderInfo: OrderInfo) {
         mNameText.setText(orderInfo.name)
-        mMobileText.setText(orderInfo.mobile)
         mEmailText.setText(orderInfo.email)
         mTelText.setText(orderInfo.tel)
 
@@ -379,7 +372,6 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
             mDialogView.findViewById<LinearLayout>(R.id.dailog_add_order_detail_btn_layout).visibility = View.GONE
 
             mNameEdit.visibility = View.VISIBLE
-            mMobileEdit.visibility = View.VISIBLE
             mEmailEdit.visibility = View.VISIBLE
             mTelEdit.visibility = View.VISIBLE
             mProductNameEdit.visibility = View.VISIBLE
@@ -399,7 +391,6 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
             mOtherEdit.visibility = View.VISIBLE
 
             mNameText.visibility = View.GONE
-            mMobileText.visibility = View.GONE
             mEmailText.visibility = View.GONE
             mTelText.visibility = View.GONE
             mProductNameText.visibility = View.GONE
@@ -425,7 +416,6 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
             mDialogView.findViewById<LinearLayout>(R.id.dailog_add_order_detail_btn_layout).visibility = View.VISIBLE
 
             mNameEdit.visibility = View.GONE
-            mMobileEdit.visibility = View.GONE
             mEmailEdit.visibility = View.GONE
             mTelEdit.visibility = View.GONE
             mProductNameEdit.visibility = View.GONE
@@ -445,7 +435,6 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
             mOtherEdit.visibility = View.GONE
 
             mNameText.visibility = View.VISIBLE
-            mMobileText.visibility = View.VISIBLE
             mEmailText.visibility = View.VISIBLE
             mTelText.visibility = View.VISIBLE
             mProductNameText.visibility = View.VISIBLE
@@ -475,7 +464,6 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
         }
 
         orderInfo.name = mNameEdit.text.toString()
-        orderInfo.mobile = mMobileEdit.text.toString()
         orderInfo.email = mEmailEdit.text.toString()
         orderInfo.tel = mTelEdit.text.toString()
 

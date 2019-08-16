@@ -19,8 +19,6 @@ class DBConfig {
     val CO_EMAIL = "email"
     // 전화번호
     val CO_TEL = "tel"
-    // 핸드폰
-    val CO_MOBILE = "mobile"
 
     //상품명
     val CO_PRODUCT_NAME = "product_name"
@@ -59,8 +57,7 @@ class DBConfig {
             " (" + CO_INDEX + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             CO_NAME + " VARCHAR(20) NOT NULL," +
             CO_EMAIL + " VARCHAR(100)," +
-            CO_TEL + " VARCHAR(20)," +
-            CO_MOBILE + " VARCHAR(20) NOT NULL," +
+            CO_TEL + " VARCHAR(20) NOT NULL," +
             CO_OTHER + " VARCHAR(500))"
     val CREATE_ORDER = "CREATE TABLE IF NOT EXISTS " + TB_ORDER +
 //            " (" + CO_INDEX + " INT NOT NULL AUTO_INCREMENT," +
@@ -68,8 +65,7 @@ class DBConfig {
             " (" + CO_INDEX + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             CO_NAME + " VARCHAR(20) NOT NULL," +
             CO_EMAIL + " VARCHAR(100)," +
-            CO_TEL + " VARCHAR(20)," +
-            CO_MOBILE + " VARCHAR(20) NOT NULL," +
+            CO_TEL + " VARCHAR(20) NOT NULL," +
 
             CO_PRODUCT_NAME + " VARCHAR(20) NOT NULL," +
             CO_ORDER_DATE + " DATETIME," +

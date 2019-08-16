@@ -95,7 +95,6 @@ class DB(context : Context?) {
             values.put(DBConfig().CO_NAME, customer.name)
             values.put(DBConfig().CO_EMAIL, customer.email)
             values.put(DBConfig().CO_TEL, customer.tel)
-            values.put(DBConfig().CO_MOBILE, customer.mobile)
             values.put(DBConfig().CO_OTHER, customer.other)
 
             if(customer.id > -1) {
@@ -139,7 +138,6 @@ class DB(context : Context?) {
 
                 customer.id = cursor.getInt(cursor.getColumnIndex(DBConfig().CO_INDEX))
                 customer.name = cursor.getString(cursor.getColumnIndex(DBConfig().CO_NAME))
-                customer.mobile = cursor.getString(cursor.getColumnIndex(DBConfig().CO_MOBILE))
                 customer.tel = cursor.getString(cursor.getColumnIndex(DBConfig().CO_TEL))
                 customer.email = cursor.getString(cursor.getColumnIndex(DBConfig().CO_EMAIL))
                 customer.other = cursor.getString(cursor.getColumnIndex(DBConfig().CO_OTHER))
@@ -154,12 +152,12 @@ class DB(context : Context?) {
         }
     }
 
-    fun getCustomer(mobile : String): ArrayList<CustomerInfo> {
+    fun getCustomer(tel : String): ArrayList<CustomerInfo> {
         var customerList = ArrayList<CustomerInfo>()
 
         chkDB()
 
-        var sql = "SELECT * FROM ${DBConfig().TB_CUSTOMER} WHERE ${DBConfig().CO_MOBILE} = '${mobile}'"
+        var sql = "SELECT * FROM ${DBConfig().TB_CUSTOMER} WHERE ${DBConfig().CO_TEL} = '${tel}'"
 
         Log.e("DB", "sql = ${sql}")
 
@@ -171,7 +169,6 @@ class DB(context : Context?) {
 
                 customer.id = cursor.getInt(cursor.getColumnIndex(DBConfig().CO_INDEX))
                 customer.name = cursor.getString(cursor.getColumnIndex(DBConfig().CO_NAME))
-                customer.mobile = cursor.getString(cursor.getColumnIndex(DBConfig().CO_MOBILE))
                 customer.tel = cursor.getString(cursor.getColumnIndex(DBConfig().CO_TEL))
                 customer.email = cursor.getString(cursor.getColumnIndex(DBConfig().CO_EMAIL))
                 customer.other = cursor.getString(cursor.getColumnIndex(DBConfig().CO_OTHER))
@@ -230,7 +227,6 @@ class DB(context : Context?) {
             values.put(DBConfig().CO_NAME, order.name)
             values.put(DBConfig().CO_EMAIL, order.email)
             values.put(DBConfig().CO_TEL, order.tel)
-            values.put(DBConfig().CO_MOBILE, order.mobile)
             values.put(DBConfig().CO_PRODUCT_NAME, order.productName)
             values.put(DBConfig().CO_ORDER_DATE, order.orderDate)
             values.put(DBConfig().CO_RELEASE_SCHEDULE, order.releaseSchedule)
@@ -287,7 +283,6 @@ class DB(context : Context?) {
                 var order = OrderInfo()
 
                 order.name = cursor.getString(cursor.getColumnIndex(DBConfig().CO_NAME))
-                order.mobile = cursor.getString(cursor.getColumnIndex(DBConfig().CO_MOBILE))
                 order.tel = cursor.getString(cursor.getColumnIndex(DBConfig().CO_TEL))
                 order.email = cursor.getString(cursor.getColumnIndex(DBConfig().CO_EMAIL))
 

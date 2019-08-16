@@ -95,7 +95,7 @@
                     </LinearLayout>
 
                     <!-- Mobile -->
-                    <LinearLayout
+                    <!--LinearLayout
                             android:id="@+id/dialog_add_order_mobile_layout"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
@@ -141,7 +141,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:background="@color/main">
-                    </LinearLayout>
+                    </LinearLayout-->
 
                     <!-- Tel -->
                     <LinearLayout

@@ -43,7 +43,7 @@ class OrderListAdapter(val context: Context, var orderList: ArrayList<OrderInfo>
         var orderInfo = orderList[position]
 
         name.text = orderInfo.name
-        mobile.text = orderInfo.mobile
+        mobile.text = orderInfo.tel
         productName.text = orderInfo.productName
         orderDate.text = orderInfo.orderDate
         release.text = orderInfo.releaseYN
@@ -52,7 +52,7 @@ class OrderListAdapter(val context: Context, var orderList: ArrayList<OrderInfo>
             val builder2 = AlertDialog.Builder(context)
 
             builder2
-                .setMessage(context.getString(R.string.delete_order, orderInfo.name, orderInfo.mobile, orderInfo.productName))
+                .setMessage(context.getString(R.string.delete_order, orderInfo.name, orderInfo.tel, orderInfo.productName))
                 .setPositiveButton(R.string.delete) { dialogInterface: DialogInterface?, i: Int ->
                     //delete
                     DB(context).getInstance(context).delOrder(orderInfo)

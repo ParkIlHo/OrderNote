@@ -66,7 +66,7 @@
     <string name="hint_promise_date">손님과의 약속 날짜를 입력하세요.</string>
     <string name="cancel_add_order">작성중이던 주문내역 추가를 취소 하시겠습니까?</string>
     <string name="delete_order">선택하신 주문내역을 삭제 하시겠습니까??\n 이름(상호) : %1$s\n 핸드폰 : %2$s\n제품명 : %3$s</string>
-    <string name="order_check_msg">이름(상호)와 핸드폰 / 상품명은 필수 입력사항 입니다.\n필수 입력사항 입력을 확인 해 주세요.!!</string>
+    <string name="order_check_msg">이름(상호)와 전화번호 / 상품명은 필수 입력사항 입니다.\n필수 입력사항 입력을 확인 해 주세요.!!</string>
 
     <!-- Customer List -->
     <string name="title_custmer_list">주문자 정보</string>
@@ -85,13 +85,13 @@
     <string name="other_hint">기타 특이사항을 입력하세요.</string>
     <string name="cancel_add_customer">작성중이던 주문자 추가를 취소 하시겠습니까?</string>
     <string name="cancel_change_customer">수정중이던 주문자 정보를 취소 하시겠습니까?</string>
-    <string name="save_add_customer">작성중인 주문자 주문자 정보를 저장 하시겠습니까??\n 이름(상호) : %1$s\n 핸드폰 : %2$s</string>
-    <string name="save_change_customer">수정중인 주문자 주문자 정보를 저장 하시겠습니까??\n 이름(상호) : %1$s\n 핸드폰 : %2$s</string>
+    <string name="save_add_customer">작성중인 주문자 주문자 정보를 저장 하시겠습니까??\n 이름(상호) : %1$s\n 전화번호 : %2$s</string>
+    <string name="save_change_customer">수정중인 주문자 주문자 정보를 저장 하시겠습니까??\n 이름(상호) : %1$s\n 전화번호 : %2$s</string>
     <string name="customer_check_msg">이름(상호)와 핸드폰은 필수 입력사항 입니다.\n필수 입력사항 입력을 확인 해 주세요.!!</string>
     <string name="not_coustomer">저장된\n정보가 없습니다.!!</string>
-    <string name="delete_customer">선택하신 주문자 정보를 삭제 하시겠습니까??\n 이름(상호) : %1$s\n 핸드폰 : %2$s</string>
+    <string name="delete_customer">선택하신 주문자 정보를 삭제 하시겠습니까??\n 이름(상호) : %1$s\n 전화번호 : %2$s</string>
     <string name="change_customer_msg">선택하신 주문자 정보를 변경 하시겠습니까??</string>
-    <string name="duplication_customer_msg">핸드폰 번호가 동일한 주문자가 있습니다. 핸드폰 번호 확인 바랍니다.</string>
+    <string name="duplication_customer_msg">전화번소가 동일한 주문자가 있습니다. 전화번호 확인 바랍니다.</string>
 
     <!-- 설정 -->
     <string name="setting_password_lable">비밀번호 :</string>
