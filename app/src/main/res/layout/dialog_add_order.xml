@@ -241,7 +241,7 @@
                             android:background="@color/main">
                     </LinearLayout>
 
-                    <!-- 상품명 -->
+                    <!-- 배송주소 -->
                     <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
@@ -253,7 +253,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="2"
                                 android:gravity="center_vertical"
-                                android:text="@string/label_product_name"
+                                android:text="@string/label_shipping_address"
                                 android:textColor="@color/string"
                                 android:textSize="15dp"/>
                         <RelativeLayout
@@ -261,11 +261,11 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1">
                             <EditText
-                                    android:id="@+id/dialog_add_order_product_name"
+                                    android:id="@+id/dialog_add_order_shipping_address"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:gravity="center_vertical"
-                                    android:hint="@string/product_name_hint"
+                                    android:hint="@string/hint_shipping_address"
                                     android:background="@color/edit_bg"
                                     android:layout_marginTop="7dp"
                                     android:layout_marginBottom="7dp"
@@ -273,7 +273,7 @@
                                     android:textColor="@color/string"
                                     android:textColorHint="@android:color/darker_gray"/>
                             <TextView
-                                    android:id="@+id/dialog_add_order_product_name_text"
+                                    android:id="@+id/dialog_add_order_shipping_address_text"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:gravity="center_vertical"
@@ -337,6 +337,54 @@
                             android:background="@color/main">
                     </LinearLayout>
 
+                    <!-- 손님 약속 날짜 -->
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:orientation="horizontal">
+                        <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:text="@string/label_promise_date"
+                                android:textColor="@color/string"
+                                android:textSize="15dp"/>
+                        <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+                            <EditText
+                                    android:id="@+id/dialog_add_order_promise_date"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:hint="@string/hint_promise_date"
+                                    android:background="@color/edit_bg"
+                                    android:layout_marginTop="7dp"
+                                    android:layout_marginBottom="7dp"
+                                    android:textSize="15dp"
+                                    android:textColor="@color/string"
+                                    android:textColorHint="@android:color/darker_gray"/>
+                            <TextView
+                                    android:id="@+id/dialog_add_order_promise_date_text"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:textSize="15dp"
+                                    android:textColor="@color/string"
+                                    android:visibility="gone"/>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/main">
+                    </LinearLayout>
+
                     <!-- 출고예정일 -->
                     <LinearLayout
                             android:layout_width="match_parent"
@@ -370,6 +418,222 @@
                                     android:textColorHint="@android:color/darker_gray"/>
                             <TextView
                                     android:id="@+id/dialog_add_order_release_schedule_text"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:textSize="15dp"
+                                    android:textColor="@color/string"
+                                    android:visibility="gone"/>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/main">
+                    </LinearLayout>
+
+                    <!-- 출고완료여부 -->
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:orientation="horizontal">
+                        <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:text="@string/label_release"
+                                android:textColor="@color/string"
+                                android:textSize="15dp"/>
+                        <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+
+                            <RadioGroup
+                                    android:id="@+id/dialog_add_order_release_layout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal">
+
+
+                                <RadioButton
+                                        android:id="@+id/dialog_add_order_release_y"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:text="Y"
+                                        android:textColor="@color/string"/>
+                                <RadioButton
+                                        android:id="@+id/dialog_add_order_release_n"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:text="N"
+                                        android:textColor="@color/string"/>
+                            </RadioGroup>
+                            <EditText
+                                    android:id="@+id/dialog_add_order_release"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:hint="@string/hint_release"
+                                    android:background="@color/edit_bg"
+                                    android:layout_marginTop="7dp"
+                                    android:layout_marginBottom="7dp"
+                                    android:textSize="15dp"
+                                    android:textColor="@color/string"
+                                    android:textColorHint="@android:color/darker_gray"
+                                    android:visibility="gone"/>
+                            <TextView
+                                    android:id="@+id/dialog_add_order_release_text"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:textSize="15dp"
+                                    android:textColor="@color/string"
+                                    android:visibility="gone"/>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/main">
+                    </LinearLayout>
+
+                    <!-- 상품명 -->
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:orientation="horizontal">
+                        <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:text="@string/label_product_name"
+                                android:textColor="@color/string"
+                                android:textSize="15dp"/>
+                        <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+                            <EditText
+                                    android:id="@+id/dialog_add_order_product_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:hint="@string/product_name_hint"
+                                    android:background="@color/edit_bg"
+                                    android:layout_marginTop="7dp"
+                                    android:layout_marginBottom="7dp"
+                                    android:textSize="15dp"
+                                    android:textColor="@color/string"
+                                    android:textColorHint="@android:color/darker_gray"/>
+                            <TextView
+                                    android:id="@+id/dialog_add_order_product_name_text"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:textSize="15dp"
+                                    android:textColor="@color/string"
+                                    android:visibility="gone"/>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/main">
+                    </LinearLayout>
+
+                    <!-- 상품이미지 -->
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:orientation="horizontal">
+                        <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:text="@string/label_product_image"
+                                android:textColor="@color/string"
+                                android:textSize="15dp"/>
+                        <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+                            <EditText
+                                    android:id="@+id/dialog_add_order_product_image"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:hint="@string/hint_product_image"
+                                    android:background="@color/edit_bg"
+                                    android:layout_marginTop="7dp"
+                                    android:layout_marginBottom="7dp"
+                                    android:textSize="15dp"
+                                    android:textColor="@color/string"
+                                    android:textColorHint="@android:color/darker_gray"/>
+                            <TextView
+                                    android:id="@+id/dialog_add_order_product_image_text"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:textSize="15dp"
+                                    android:textColor="@color/string"
+                                    android:visibility="gone"/>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/main">
+                    </LinearLayout>
+
+                    <!-- 거래처명 -->
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:orientation="horizontal">
+                        <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:text="@string/label_account_name"
+                                android:textColor="@color/string"
+                                android:textSize="15dp"/>
+                        <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+                            <EditText
+                                    android:id="@+id/dialog_add_order_account_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:hint="@string/hint_account_name"
+                                    android:background="@color/edit_bg"
+                                    android:layout_marginTop="7dp"
+                                    android:layout_marginBottom="7dp"
+                                    android:textSize="15dp"
+                                    android:textColor="@color/string"
+                                    android:textColorHint="@android:color/darker_gray"/>
+                            <TextView
+                                    android:id="@+id/dialog_add_order_account_name_text"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:gravity="center_vertical"
@@ -466,222 +730,6 @@
                                     android:textColorHint="@android:color/darker_gray"/>
                             <TextView
                                     android:id="@+id/dialog_add_order_selling_price_text"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center_vertical"
-                                    android:textSize="15dp"
-                                    android:textColor="@color/string"
-                                    android:visibility="gone"/>
-                        </RelativeLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/main">
-                    </LinearLayout>
-
-                    <!-- 출고완료여부 -->
-                    <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:paddingLeft="15dp"
-                            android:paddingRight="15dp"
-                            android:orientation="horizontal">
-                        <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="2"
-                                android:gravity="center_vertical"
-                                android:text="@string/label_release"
-                                android:textColor="@color/string"
-                                android:textSize="15dp"/>
-                        <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1">
-
-                            <RadioGroup
-                                    android:id="@+id/dialog_add_order_release_layout"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:orientation="horizontal">
-
-
-                                <RadioButton
-                                        android:id="@+id/dialog_add_order_release_y"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="1"
-                                        android:text="Y"
-                                        android:textColor="@color/string"/>
-                                <RadioButton
-                                        android:id="@+id/dialog_add_order_release_n"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="1"
-                                        android:text="N"
-                                        android:textColor="@color/string"/>
-                            </RadioGroup>
-                            <EditText
-                                    android:id="@+id/dialog_add_order_release"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center_vertical"
-                                    android:hint="@string/hint_release"
-                                    android:background="@color/edit_bg"
-                                    android:layout_marginTop="7dp"
-                                    android:layout_marginBottom="7dp"
-                                    android:textSize="15dp"
-                                    android:textColor="@color/string"
-                                    android:textColorHint="@android:color/darker_gray"
-                            android:visibility="gone"/>
-                            <TextView
-                                    android:id="@+id/dialog_add_order_release_text"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center_vertical"
-                                    android:textSize="15dp"
-                                    android:textColor="@color/string"
-                                    android:visibility="gone"/>
-                        </RelativeLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/main">
-                    </LinearLayout>
-
-                    <!-- 상품이미지 -->
-                    <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:paddingLeft="15dp"
-                            android:paddingRight="15dp"
-                            android:orientation="horizontal">
-                        <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="2"
-                                android:gravity="center_vertical"
-                                android:text="@string/label_product_image"
-                                android:textColor="@color/string"
-                                android:textSize="15dp"/>
-                        <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1">
-                            <EditText
-                                    android:id="@+id/dialog_add_order_product_image"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center_vertical"
-                                    android:hint="@string/hint_product_image"
-                                    android:background="@color/edit_bg"
-                                    android:layout_marginTop="7dp"
-                                    android:layout_marginBottom="7dp"
-                                    android:textSize="15dp"
-                                    android:textColor="@color/string"
-                                    android:textColorHint="@android:color/darker_gray"/>
-                            <TextView
-                                    android:id="@+id/dialog_add_order_product_image_text"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center_vertical"
-                                    android:textSize="15dp"
-                                    android:textColor="@color/string"
-                                    android:visibility="gone"/>
-                        </RelativeLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/main">
-                    </LinearLayout>
-
-                    <!-- 배송주소 -->
-                    <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:paddingLeft="15dp"
-                            android:paddingRight="15dp"
-                            android:orientation="horizontal">
-                        <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="2"
-                                android:gravity="center_vertical"
-                                android:text="@string/label_shipping_address"
-                                android:textColor="@color/string"
-                                android:textSize="15dp"/>
-                        <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1">
-                            <EditText
-                                    android:id="@+id/dialog_add_order_shipping_address"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center_vertical"
-                                    android:hint="@string/hint_shipping_address"
-                                    android:background="@color/edit_bg"
-                                    android:layout_marginTop="7dp"
-                                    android:layout_marginBottom="7dp"
-                                    android:textSize="15dp"
-                                    android:textColor="@color/string"
-                                    android:textColorHint="@android:color/darker_gray"/>
-                            <TextView
-                                    android:id="@+id/dialog_add_order_shipping_address_text"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center_vertical"
-                                    android:textSize="15dp"
-                                    android:textColor="@color/string"
-                                    android:visibility="gone"/>
-                        </RelativeLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/main">
-                    </LinearLayout>
-
-                    <!-- 거래처명 -->
-                    <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:paddingLeft="15dp"
-                            android:paddingRight="15dp"
-                            android:orientation="horizontal">
-                        <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="2"
-                                android:gravity="center_vertical"
-                                android:text="@string/label_account_name"
-                                android:textColor="@color/string"
-                                android:textSize="15dp"/>
-                        <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1">
-                            <EditText
-                                    android:id="@+id/dialog_add_order_account_name"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center_vertical"
-                                    android:hint="@string/hint_account_name"
-                                    android:background="@color/edit_bg"
-                                    android:layout_marginTop="7dp"
-                                    android:layout_marginBottom="7dp"
-                                    android:textSize="15dp"
-                                    android:textColor="@color/string"
-                                    android:textColorHint="@android:color/darker_gray"/>
-                            <TextView
-                                    android:id="@+id/dialog_add_order_account_name_text"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:gravity="center_vertical"
@@ -874,54 +922,6 @@
                                     android:textColorHint="@android:color/darker_gray"/>
                             <TextView
                                     android:id="@+id/dialog_add_order_transform_text"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center_vertical"
-                                    android:textSize="15dp"
-                                    android:textColor="@color/string"
-                                    android:visibility="gone"/>
-                        </RelativeLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/main">
-                    </LinearLayout>
-
-                    <!-- 손님 약속 날짜 -->
-                    <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:paddingLeft="15dp"
-                            android:paddingRight="15dp"
-                            android:orientation="horizontal">
-                        <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="2"
-                                android:gravity="center_vertical"
-                                android:text="@string/label_promise_date"
-                                android:textColor="@color/string"
-                                android:textSize="15dp"/>
-                        <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1">
-                            <EditText
-                                    android:id="@+id/dialog_add_order_promise_date"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center_vertical"
-                                    android:hint="@string/hint_promise_date"
-                                    android:background="@color/edit_bg"
-                                    android:layout_marginTop="7dp"
-                                    android:layout_marginBottom="7dp"
-                                    android:textSize="15dp"
-                                    android:textColor="@color/string"
-                                    android:textColorHint="@android:color/darker_gray"/>
-                            <TextView
-                                    android:id="@+id/dialog_add_order_promise_date_text"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:gravity="center_vertical"
