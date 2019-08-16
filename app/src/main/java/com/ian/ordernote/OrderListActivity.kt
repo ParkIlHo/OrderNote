@@ -2,8 +2,13 @@ package com.ian.ordernote
 
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.content.Intent
+import android.database.Cursor
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -93,6 +98,19 @@ class OrderListActivity: CommonActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.e("151515", "requestCode = " + requestCode)
+        Log.e("151515", "resultCode = " + resultCode)
+        Log.e("151515", "data = " + data.toString())
+        when(requestCode) {
+            1515 -> {
+                Log.e("151515", "")
+                sendImage(data!!.data)
+            }
+        }
+    }
+
     fun init() {
 
         mDb = DB(applicationContext).getInstance(applicationContext)
@@ -123,5 +141,21 @@ class OrderListActivity: CommonActivity() {
             order_list_no.visibility = View.VISIBLE
             order_list_layout.visibility = View.GONE
         }
+    }
+
+    fun sendImage(imgUri: Uri) {
+        var imagePath = getRealPathFromURI(imgUri)
+        Log.e("151515", "imagePath = " + imagePath)
+    }
+
+    fun getRealPathFromURI(uri: Uri?): String? {
+        var proj: Array<String> = arrayOf(MediaStore.Images.Media.DATA)
+        var c: Cursor = contentResolver.query(uri, proj, null, null, null)
+        var index = c.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        c.moveToFirst()
+
+        var result = c.getString(index)
+
+        return result
     }
 }

@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.ian.ordernote.CustomerListActivity
+import com.ian.ordernote.OrderListActivity
 import com.ian.ordernote.R
 import com.ian.ordernote.data.CustomerInfo
 import com.ian.ordernote.data.OrderInfo

@@ -1,10 +1,13 @@
 package com.ian.ordernote.dialog
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Build
+import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.util.Log
 import android.view.MotionEvent
@@ -42,6 +45,8 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
 
     var datePickerDialog: DatePickerDialog? = null
 
+    var mProductImagePath: String = ""
+
     lateinit var mNameEdit: EditText
     lateinit var mTelEdit: EditText
     lateinit var mEmailEdit: EditText
@@ -54,7 +59,7 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
     lateinit var mReleaseLayout: RadioGroup
     lateinit var mReleaseY: RadioButton
     lateinit var mReleaseN: RadioButton
-    lateinit var mProduceImageEdit: EditText
+//    lateinit var mProduceImageEdit: EditText
     lateinit var mShippingAddressEdit: EditText
     lateinit var mAccountNameEdit: EditText
     lateinit var mContentsEdit: EditText
@@ -73,7 +78,7 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
     lateinit var mCoastPriceText: TextView
     lateinit var mSellingPriceText: TextView
     lateinit var mReleaseText: TextView
-    lateinit var mProduceImageText: TextView
+//    lateinit var mProduceImageText: TextView
     lateinit var mShippingAddressText: TextView
     lateinit var mAccountNameText: TextView
     lateinit var mContentsText: TextView
@@ -82,6 +87,10 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
     lateinit var mTransformText: TextView
     lateinit var mPromiseDateText: TextView
     lateinit var mOtherText: TextView
+
+    lateinit var mProduceImage: ImageView
+
+    lateinit var mAccountBtn: Button
 
     init {
         mDb = DB(context).getInstance(context!!)
@@ -103,7 +112,6 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
         mReleaseLayout = mDialogView.findViewById(R.id.dialog_add_order_release_layout)
         mReleaseY = mDialogView.findViewById(R.id.dialog_add_order_release_y)
         mReleaseN = mDialogView.findViewById(R.id.dialog_add_order_release_n)
-        mProduceImageEdit = mDialogView.findViewById(R.id.dialog_add_order_product_image)
         mShippingAddressEdit = mDialogView.findViewById(R.id.dialog_add_order_shipping_address)
         mAccountNameEdit = mDialogView.findViewById(R.id.dialog_add_order_account_name)
         mContentsEdit = mDialogView.findViewById(R.id.dialog_add_order_content)
@@ -122,7 +130,6 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
         mCoastPriceText = mDialogView.findViewById(R.id.dialog_add_order_coast_price_text)
         mSellingPriceText = mDialogView.findViewById(R.id.dialog_add_order_selling_price_text)
         mReleaseText = mDialogView.findViewById(R.id.dialog_add_order_release_text)
-        mProduceImageText = mDialogView.findViewById(R.id.dialog_add_order_product_image_text)
         mShippingAddressText = mDialogView.findViewById(R.id.dialog_add_order_shipping_address_text)
         mAccountNameText = mDialogView.findViewById(R.id.dialog_add_order_account_name_text)
         mContentsText = mDialogView.findViewById(R.id.dialog_add_order_content_text)
@@ -132,10 +139,15 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
         mPromiseDateText = mDialogView.findViewById(R.id.dialog_add_order_promise_date_text)
         mOtherText = mDialogView.findViewById(R.id.dialog_add_order_other_text)
 
+        mAccountBtn = mDialogView.findViewById(R.id.dialog_add_order_account_btn)
+
         mDialogView.findViewById<Button>(R.id.dialog_add_order_cancel_btn).setOnClickListener(this)
         mDialogView.findViewById<Button>(R.id.dialog_add_order_save_btn).setOnClickListener(this)
         mDialogView.findViewById<Button>(R.id.dialog_add_order_confirm_btn).setOnClickListener(this)
         mDialogView.findViewById<Button>(R.id.dialog_add_order_change_btn).setOnClickListener(this)
+        mDialogView.findViewById<ImageView>(R.id.dialog_add_order_product_image_view).setOnClickListener(this)
+
+        mAccountBtn.setOnClickListener(this)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mOrderDateEdit.showSoftInputOnFocus = false
@@ -225,6 +237,19 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
                     dismiss()
                 }
             }
+
+            R.id.dialog_add_order_account_btn -> { // add account button
+                // 사용자 검색 기능 추가
+            }
+
+            R.id.dialog_add_order_product_image_view -> {
+                if (isAdd) {
+                    // 앨범 호출 하여 image 추가
+                    selectGallerty()
+                } else {
+                    // popup 창으로 image 보여짐
+                }
+            }
         }
     }
 
@@ -295,7 +320,7 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
                 mReleaseN.isChecked = true
             }
         }
-        mProduceImageEdit.setText("")
+//        mProduceImageEdit.setText("")
         mShippingAddressEdit.setText("")
         mAccountNameEdit.setText("")
         mContentsEdit.setText("")
@@ -330,7 +355,7 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
                 mReleaseN.isChecked = true
             }
         }
-        mProduceImageEdit.setText(orderInfo.productImage)
+//        mProduceImageEdit.setText(orderInfo.productImage)
         mShippingAddressEdit.setText(orderInfo.shippingAddress)
         mAccountNameEdit.setText(orderInfo.accountName)
         mContentsEdit.setText(orderInfo.content)
@@ -352,7 +377,7 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
         mCoastPriceText.setText(orderInfo.coastPrice)
         mSellingPriceText.setText(orderInfo.sellingPrice)
         mReleaseText.setText(orderInfo.releaseYN)
-        mProduceImageText.setText(orderInfo.productImage)
+//        mProduceImageText.setText(orderInfo.productImage)
         mShippingAddressText.setText(orderInfo.shippingAddress)
         mAccountNameText.setText(orderInfo.accountName)
         mContentsText.setText(orderInfo.content)
@@ -380,7 +405,7 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
             mCoastPriceEdit.visibility = View.VISIBLE
             mSellingPriceEdit.visibility = View.VISIBLE
             mReleaseLayout.visibility = View.VISIBLE
-            mProduceImageEdit.visibility = View.VISIBLE
+//            mProduceImageEdit.visibility = View.VISIBLE
             mShippingAddressEdit.visibility = View.VISIBLE
             mAccountNameEdit.visibility = View.VISIBLE
             mContentsEdit.visibility = View.VISIBLE
@@ -399,7 +424,7 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
             mCoastPriceText.visibility = View.GONE
             mSellingPriceText.visibility = View.GONE
             mReleaseText.visibility = View.GONE
-            mProduceImageText.visibility = View.GONE
+//            mProduceImageText.visibility = View.GONE
             mShippingAddressText.visibility = View.GONE
             mAccountNameText.visibility = View.GONE
             mContentsText.visibility = View.GONE
@@ -424,7 +449,7 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
             mCoastPriceEdit.visibility = View.GONE
             mSellingPriceEdit.visibility = View.GONE
             mReleaseLayout.visibility = View.GONE
-            mProduceImageEdit.visibility = View.GONE
+//            mProduceImageEdit.visibility = View.GONE
             mShippingAddressEdit.visibility = View.GONE
             mAccountNameEdit.visibility = View.GONE
             mContentsEdit.visibility = View.GONE
@@ -443,7 +468,7 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
             mCoastPriceText.visibility = View.VISIBLE
             mSellingPriceText.visibility = View.VISIBLE
             mReleaseText.visibility = View.VISIBLE
-            mProduceImageText.visibility = View.VISIBLE
+//            mProduceImageText.visibility = View.VISIBLE
             mShippingAddressText.visibility = View.VISIBLE
             mAccountNameText.visibility = View.VISIBLE
             mContentsText.visibility = View.VISIBLE
@@ -478,7 +503,7 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
         } else {
             orderInfo.releaseYN = "N"
         }
-        orderInfo.productImage = mProduceImageEdit.text.toString()
+//        orderInfo.productImage = mProduceImageEdit.text.toString()
         orderInfo.shippingAddress = mShippingAddressEdit.text.toString()
         orderInfo.accountName = mAccountNameEdit.text.toString()
         orderInfo.content = mContentsEdit.text.toString()
@@ -561,5 +586,17 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
         }, year, month, day)
 
         datePickerDialog!!.show()
+    }
+
+    fun setProductImage() {
+        // order
+    }
+
+    fun selectGallerty() {
+        var intent = Intent()
+
+        intent.setType("image/*")
+        intent.setAction(Intent.ACTION_GET_CONTENT)
+        (mContext as OrderListActivity).startActivityForResult(intent, 1515)
     }
 }
