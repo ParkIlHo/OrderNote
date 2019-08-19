@@ -22,6 +22,7 @@ import com.ian.ordernote.core.CommonAlertDialog
 import com.ian.ordernote.data.OrderInfo
 import com.ian.ordernote.db.DB
 import org.w3c.dom.Text
+import java.lang.Exception
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -196,6 +197,7 @@ class OrderDialog(context: Context?, listener: OrderListActivity.OrderInfoListen
                         mContext.getString(R.string.confirm),
                         mContext.getString(R.string.cancel),
                         DialogInterface.OnClickListener { dialogInterface, i ->
+                            setOrderInfoText(mOrderInfo)
                             setMode(false)
                         },
                         null)
@@ -615,6 +617,11 @@ class OrderDialog(context: Context?, listener: OrderListActivity.OrderInfoListen
 
     fun setImageUri(uri: Uri?) {
         mProductImageUri = uri;
-        mProductImage.setImageURI(uri)
+        try {
+            mProductImage.setImageURI(uri)
+        } catch (e: Exception) {
+            Log.e("151515", "image load error:" + e.toString())
+            mProductImage.setImageResource(R.drawable.default_img)
+        }
     }
 }
