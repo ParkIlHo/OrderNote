@@ -16,6 +16,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.ian.ordernote.core.CommonActivity
+import com.ian.ordernote.data.OrderInfo
 import com.ian.ordernote.db.DB
 import com.ian.ordernote.dialog.OrderDialog
 import com.ian.ordernote.view.CustomerListAdapter
@@ -26,15 +27,28 @@ import kotlinx.android.synthetic.main.activity_order_list.*
 class OrderListActivity: CommonActivity() {
 
     var mDb : DB? = null
+    var orderDailog : OrderDialog? = null
     lateinit var mAdapter: OrderListAdapter
 
-    val listener: CustomerListActivity.CustomerChangeListener? = object : CustomerListActivity.CustomerChangeListener {
+    interface OrderInfoListener {
+        fun onDelete()
+        fun onAdd()
+        fun showOrderInfo(orderinfo: OrderInfo)
+    }
+
+    val listener: OrderInfoListener? = object : OrderInfoListener {
         override fun onDelete() {
             initOrderList()
         }
 
         override fun onAdd() {
             initOrderList()
+        }
+
+        override fun showOrderInfo(orderinfo: OrderInfo) {
+            showOrderinfoDailog(orderinfo)
+//            orderDailog = OrderDialog(this, this)
+//            orderDailog!!.show()
         }
 
     }
@@ -57,8 +71,9 @@ class OrderListActivity: CommonActivity() {
             R.id.action_order_add -> {
                 Toast.makeText(this, "주문 추가 화면 이동", Toast.LENGTH_SHORT).show()
 
-                val dialog = OrderDialog(this, listener!!)
-                dialog.show()
+//                orderDailog = OrderDialog(this, listener!!)
+//                orderDailog!!.show()
+                showOrderinfoDailog(null)
 //                val builder = AlertDialog.Builder(this)
 //                val dialogView = layoutInflater.inflate(R.layout.dialog_add_order, null)
 //
@@ -100,13 +115,12 @@ class OrderListActivity: CommonActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        Log.e("151515", "requestCode = " + requestCode)
-        Log.e("151515", "resultCode = " + resultCode)
-        Log.e("151515", "data = " + data.toString())
         when(requestCode) {
-            1515 -> {
-                Log.e("151515", "")
-                sendImage(data!!.data)
+            Const.REQUEST_CODE_IMAGE -> {
+                data?.let {
+                    Log.e("151515", "")
+                    sendImage(it!!.data)
+                }
             }
         }
     }
@@ -144,18 +158,43 @@ class OrderListActivity: CommonActivity() {
     }
 
     fun sendImage(imgUri: Uri) {
-        var imagePath = getRealPathFromURI(imgUri)
-        Log.e("151515", "imagePath = " + imagePath)
+//        var imagePath = getRealPathFromURI(imgUri)
+//        Log.e("151515", "imagePath = " + imagePath)
+        if(orderDailog != null && orderDailog!!.isShowing) {
+            orderDailog!!.setImageUri(imgUri)
+        }
     }
 
     fun getRealPathFromURI(uri: Uri?): String? {
         var proj: Array<String> = arrayOf(MediaStore.Images.Media.DATA)
-        var c: Cursor = contentResolver.query(uri, proj, null, null, null)
+        var c: Cursor = this.contentResolver.query(uri, proj, null, null, null)
+        var cursor = managedQuery(uri, proj, null, null, null)
         var index = c.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        var index2 = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
         c.moveToFirst()
+        cursor.moveToFirst()
+
+        Log.e("151515", "c = " + c.getString(index))
+        Log.e("151515", "cursor = " + cursor.getString(index))
 
         var result = c.getString(index)
 
         return result
+    }
+
+    fun showOrderinfoDailog(orderinfo: OrderInfo?) {
+        if(orderDailog !=null) {
+            if(orderDailog!!.isShowing) {
+                orderDailog!!.dismiss()
+            }
+            orderDailog = null
+        }
+        orderDailog = OrderDialog(this, listener!!)
+
+        orderinfo?.let {
+            orderDailog!!.setOrderInfo(it)
+            orderDailog!!.isAdd = false
+        }
+        orderDailog!!.show()
     }
 }

@@ -6,6 +6,7 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
@@ -13,6 +14,7 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.*
+import com.ian.ordernote.Const
 import com.ian.ordernote.CustomerListActivity
 import com.ian.ordernote.OrderListActivity
 import com.ian.ordernote.R
@@ -24,16 +26,17 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChangeListener) : CommonAlertDialog(context), View.OnClickListener, View.OnTouchListener {
+class OrderDialog(context: Context?, listener: OrderListActivity.OrderInfoListener) : CommonAlertDialog(context), View.OnClickListener, View.OnTouchListener {
 
     var isAdd = true
+    var isChange = false
     lateinit var mOrderInfo: OrderInfo
     lateinit var mTempOrderInfo: OrderInfo
 
     lateinit var mContext: Context
     lateinit var mBuilder: AlertDialog.Builder
     lateinit var mDialogView: View
-    lateinit var mListener: CustomerListActivity.CustomerChangeListener
+    lateinit var mListener: OrderListActivity.OrderInfoListener
 
     var mDb : DB? = null
 
@@ -45,7 +48,7 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
 
     var datePickerDialog: DatePickerDialog? = null
 
-    var mProductImagePath: String = ""
+    var mProductImageUri: Uri? = null
 
     lateinit var mNameEdit: EditText
     lateinit var mTelEdit: EditText
@@ -88,7 +91,7 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
     lateinit var mPromiseDateText: TextView
     lateinit var mOtherText: TextView
 
-    lateinit var mProduceImage: ImageView
+    lateinit var mProductImage: ImageView
 
     lateinit var mAccountBtn: Button
 
@@ -141,11 +144,13 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
 
         mAccountBtn = mDialogView.findViewById(R.id.dialog_add_order_account_btn)
 
+        mProductImage = mDialogView.findViewById<ImageView>(R.id.dialog_add_order_product_image_view)
+
         mDialogView.findViewById<Button>(R.id.dialog_add_order_cancel_btn).setOnClickListener(this)
         mDialogView.findViewById<Button>(R.id.dialog_add_order_save_btn).setOnClickListener(this)
         mDialogView.findViewById<Button>(R.id.dialog_add_order_confirm_btn).setOnClickListener(this)
         mDialogView.findViewById<Button>(R.id.dialog_add_order_change_btn).setOnClickListener(this)
-        mDialogView.findViewById<ImageView>(R.id.dialog_add_order_product_image_view).setOnClickListener(this)
+        mProductImage.setOnClickListener(this)
 
         mAccountBtn.setOnClickListener(this)
 
@@ -228,7 +233,6 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
                 mTempOrderInfo = mOrderInfo
 
                 setOrderInfoEdit(mTempOrderInfo)
-
                 setMode(true)
             }
 
@@ -243,7 +247,7 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
             }
 
             R.id.dialog_add_order_product_image_view -> {
-                if (isAdd) {
+                if (isAdd || isChange) {
                     // 앨범 호출 하여 image 추가
                     selectGallerty()
                 } else {
@@ -292,6 +296,7 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
             mTempOrderInfo = OrderInfo()
             init()
         } else {
+            this.isChange = false
             mTempOrderInfo = mOrderInfo
             setOrderInfoText(mOrderInfo)
             mDialogView.findViewById<TextView>(R.id.dialog_add_order_title).setText(R.string.confirm_order)
@@ -386,11 +391,18 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
         mTransformText.setText(orderInfo.transform)
         mPromiseDateText.setText(orderInfo.promiseDate)
         mOtherText.setText(orderInfo.other)
+        orderInfo?.productImage?.let {
+            Log.e("151515", "setOrderinfoText, product Image uri= " + it)
+            setImageUri(Uri.parse(it))
+        }.let {
+            Log.e("151515", "setOrderinfoText, product Image uri null")
+        }
     }
 
     private fun setMode(isAdd : Boolean) {
         if(isAdd) {
             if(!this.isAdd) {
+                this.isChange = true
                 mDialogView.findViewById<TextView>(R.id.dialog_add_order_title).setText(R.string.change_order)
             }
             mDialogView.findViewById<LinearLayout>(R.id.dailog_add_order_add_btn_layout).visibility = View.VISIBLE
@@ -435,6 +447,7 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
             mOtherText.visibility = View.GONE
         } else {
             if(!this.isAdd) {
+                this.isChange = false
                 mDialogView.findViewById<TextView>(R.id.dialog_add_order_title).setText(R.string.confirm_order)
             }
             mDialogView.findViewById<LinearLayout>(R.id.dailog_add_order_add_btn_layout).visibility = View.GONE
@@ -512,7 +525,7 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
         orderInfo.transform = mTransformEdit.text.toString()
         orderInfo.promiseDate = mPromiseDateEdit.text.toString()
         orderInfo.other = mOtherEdit.text.toString()
-
+        orderInfo.productImage = mProductImageUri.toString()
 
         result = mDb?.setOrder(orderInfo)!!
 
@@ -597,6 +610,11 @@ class OrderDialog(context: Context?, listener: CustomerListActivity.CustomerChan
 
         intent.setType("image/*")
         intent.setAction(Intent.ACTION_GET_CONTENT)
-        (mContext as OrderListActivity).startActivityForResult(intent, 1515)
+        (mContext as OrderListActivity).startActivityForResult(intent, Const.REQUEST_CODE_IMAGE)
+    }
+
+    fun setImageUri(uri: Uri?) {
+        mProductImageUri = uri;
+        mProductImage.setImageURI(uri)
     }
 }
