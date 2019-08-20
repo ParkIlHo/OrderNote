@@ -508,7 +508,14 @@ class OrderDialog(context: Context?, listener: OrderListActivity.OrderInfoListen
         orderInfo.tel = mTelEdit.text.toString()
 
         orderInfo.productName = mProductNameEdit.text.toString()
-        orderInfo.orderDate = mOrderDateEdit.text.toString()
+        if(TextUtils.isEmpty(mOrderDateEdit.text.toString())) {
+            val timeZone = TimeZone.getTimeZone("Asia/Seoul")
+            val calendar = GregorianCalendar(timeZone)
+
+            orderInfo.orderDate = "${calendar.get(GregorianCalendar.YEAR)}.${calendar.get(GregorianCalendar.MONTH)+1}.${calendar.get(GregorianCalendar.DATE)}"
+        } else {
+            orderInfo.orderDate = mOrderDateEdit.text.toString()
+        }
         orderInfo.releaseSchedule = mReleaseDateEdit.text.toString()
         orderInfo.coastPrice = mCoastPriceEdit.text.toString()
         orderInfo.sellingPrice = mSellingPriceEdit.text.toString()
