@@ -17,6 +17,7 @@
     <string name="release_yn">출고</string>
     <string name="change2">변경</string>
     <string name="second">초</string>
+    <string name="required_input_msg">* : 필수입력</string>
 
 
     <!-- Password -->

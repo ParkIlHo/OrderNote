@@ -42,6 +42,15 @@
                         android:background="@drawable/icon_account"/>
             </RelativeLayout>
 
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:text="@string/required_input_msg"
+                    android:textSize="10dp"
+                    android:gravity="right|center_vertical"
+                    android:layout_marginRight="10dp"/>
+
             <!-- Body -->
             <ScrollView
                     android:layout_width="match_parent"
@@ -55,9 +64,16 @@
                             android:id="@+id/dialog_add_order_name_layout"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
-                            android:paddingLeft="15dp"
                             android:paddingRight="15dp"
                             android:orientation="horizontal">
+                        <TextView
+                                android:layout_width="15dp"
+                                android:layout_height="match_parent"
+                                android:textColor="@android:color/holo_red_dark"
+                                android:text="*"
+                                android:textSize="20dp"
+                                android:gravity="center"
+                        />
                         <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -156,9 +172,16 @@
                             android:id="@+id/dialog_add_order_tel_layout"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
-                            android:paddingLeft="15dp"
                             android:paddingRight="15dp"
                             android:orientation="horizontal">
+                        <TextView
+                                android:layout_width="15dp"
+                                android:layout_height="match_parent"
+                                android:textColor="@android:color/holo_red_dark"
+                                android:text="*"
+                                android:textSize="20dp"
+                                android:gravity="center"
+                        />
                         <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -517,9 +540,16 @@
                     <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
-                            android:paddingLeft="15dp"
                             android:paddingRight="15dp"
                             android:orientation="horizontal">
+                        <TextView
+                                android:layout_width="15dp"
+                                android:layout_height="match_parent"
+                                android:textColor="@android:color/holo_red_dark"
+                                android:text="*"
+                                android:textSize="20dp"
+                                android:gravity="center"
+                        />
                         <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
