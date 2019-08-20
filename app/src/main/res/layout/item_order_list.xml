@@ -12,30 +12,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical">
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-                <TextView
-                        android:id="@+id/item_order_list_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="2"
-                        android:text="test"
-                        android:textSize="15dp"
-                        android:textColor="@color/string"
-                        android:gravity="center"/>
-                <TextView
-                        android:id="@+id/item_order_list_mobile"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="2"
-                        android:text="010-37147354"
-                        android:textSize="15dp"
-                        android:textColor="@color/string"
-                        android:gravity="center"/>
-            </LinearLayout>
 
             <LinearLayout
                     android:layout_width="match_parent"
@@ -43,11 +19,11 @@
                     android:orientation="horizontal"
                     android:layout_weight="1">
                 <TextView
-                        android:id="@+id/item_order_list_product_name"
+                        android:id="@+id/item_order_list_name"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="4"
-                        android:text="상품명"
+                        android:text="이름"
                         android:textSize="15dp"
                         android:textColor="@color/string"
                         android:gravity="center"/>

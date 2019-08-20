@@ -35,8 +35,8 @@ class OrderListAdapter(val context: Context, var orderList: ArrayList<OrderInfo>
         val view = LayoutInflater.from(context).inflate(R.layout.item_order_list, null)
 
         val name = view.findViewById<TextView>(R.id.item_order_list_name)
-        val mobile = view.findViewById<TextView>(R.id.item_order_list_mobile)
-        val productName = view.findViewById<TextView>(R.id.item_order_list_product_name)
+//        val mobile = view.findViewById<TextView>(R.id.item_order_list_mobile)
+//        val productName = view.findViewById<TextView>(R.id.item_order_list_product_name)
         val orderDate = view.findViewById<TextView>(R.id.item_order_list_order_date)
         val release = view.findViewById<TextView>(R.id.item_order_list_release)
         val delBtn = view.findViewById<Button>(R.id.item_order_list_delete)
@@ -44,8 +44,8 @@ class OrderListAdapter(val context: Context, var orderList: ArrayList<OrderInfo>
         var orderInfo = orderList[position]
 
         name.text = orderInfo.name
-        mobile.text = orderInfo.tel
-        productName.text = orderInfo.productName
+//        mobile.text = orderInfo.tel
+//        productName.text = orderInfo.productName
         orderDate.text = orderInfo.orderDate
         release.text = orderInfo.releaseYN
 
