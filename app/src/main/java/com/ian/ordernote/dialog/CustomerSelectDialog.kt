@@ -3,6 +3,7 @@ package com.ian.ordernote.dialog
 import android.app.AlertDialog
 import android.content.Context
 import android.os.AsyncTask
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -46,6 +47,7 @@ class CustomerSelectDialog(context: Context, listener: OrderListActivity.OrderIn
         mSearchBtn = mDialogView.findViewById<Button>(R.id.dialog_customer_select_cancel_btn)
         noDataText = mDialogView.findViewById<TextView>(R.id.dialog_customer_select_no_data)
         listLayout = mDialogView.findViewById<LinearLayout>(R.id.dialog_customer_select_list_layout)
+        mSearchEdit = mDialogView.findViewById(R.id.dialog_customer_select_input_edit)
 
         mList = mDialogView.findViewById(R.id.dialog_customer_select_list)
 
@@ -66,9 +68,10 @@ class CustomerSelectDialog(context: Context, listener: OrderListActivity.OrderIn
 
             override fun doInBackground(vararg params: String?): Boolean {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                mCustomerList = ArrayList<CustomerInfo>()
                 mCustomerList = mDb.getCustomer()!!
 
-                Log.e("151515", "Customer List size = " + mCustomerList.size)
+                Log.e("151515", "Customer List size = " + mCustomerList!!.size)
 
                 return true
             }
@@ -99,7 +102,40 @@ class CustomerSelectDialog(context: Context, listener: OrderListActivity.OrderIn
                 }
 
                 R.id.dialog_customer_select_search_btn -> {
-                    // 검색
+                    object : AsyncTask<String, String, Boolean>() {
+                        override fun onPreExecute() {
+                            super.onPreExecute()
+
+                            mSearchBtn.isEnabled = false
+                        }
+
+                        override fun doInBackground(vararg params: String?): Boolean {
+//                           TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                            mCustomerList = ArrayList<CustomerInfo>()
+                            if(TextUtils.isEmpty(mSearchEdit.text)) {
+                                mCustomerList = mDb.getCustomer()!!
+                            } else {
+                                if (mNameRadio.isChecked) {
+                                    mCustomerList = mDb.getCustomerSearchName(mSearchEdit.text.toString())!!
+                                } else {
+                                    mCustomerList = mDb.getCustomerSearchTel(mSearchEdit.text.toString())!!
+                                }
+                            }
+                            Log.e("151515", "Customer List size = " + mCustomerList!!.size)
+
+                            return true
+                        }
+
+                        override fun onPostExecute(result: Boolean?) {
+                            super.onPostExecute(result)
+                            mSearchBtn.isEnabled = true
+
+                            initList()
+                        }
+                    }.execute()
+                }
+                else ->  {
+
                 }
             }
         }
@@ -130,7 +166,7 @@ class CustomerSelectDialog(context: Context, listener: OrderListActivity.OrderIn
 
     fun initList() {
 
-        if(mCustomerList == null || mCustomerList.size <= 0) {
+        if(mCustomerList == null || mCustomerList!!.size <= 0) {
 
             noDataText.visibility = View.VISIBLE
             listLayout.visibility = View.GONE
