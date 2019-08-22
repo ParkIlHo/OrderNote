@@ -19,6 +19,7 @@ import com.ian.ordernote.CustomerListActivity
 import com.ian.ordernote.OrderListActivity
 import com.ian.ordernote.R
 import com.ian.ordernote.core.CommonAlertDialog
+import com.ian.ordernote.data.CustomerInfo
 import com.ian.ordernote.data.OrderInfo
 import com.ian.ordernote.db.DB
 import org.w3c.dom.Text
@@ -246,6 +247,9 @@ class OrderDialog(context: Context?, listener: OrderListActivity.OrderInfoListen
 
             R.id.dialog_add_order_account_btn -> { // add account button
                 // 사용자 검색 기능 추가
+                mListener?.let {
+                    it.showCustomerSelect()
+                }
             }
 
             R.id.dialog_add_order_product_image_view -> {
@@ -630,5 +634,11 @@ class OrderDialog(context: Context?, listener: OrderListActivity.OrderInfoListen
             Log.e("151515", "image load error:" + e.toString())
             mProductImage.setImageResource(R.drawable.default_img)
         }
+    }
+
+    fun selectCustomer(customerInfo: CustomerInfo) {
+        mNameEdit.setText(customerInfo.name)
+        mTelEdit.setText(customerInfo.tel)
+        mEmailEdit.setText(customerInfo.email)
     }
 }

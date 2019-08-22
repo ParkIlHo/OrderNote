@@ -183,6 +183,68 @@ class DB(context : Context?) {
         }
     }
 
+    fun getCustomerSearchName(name: String): ArrayList<CustomerInfo> {
+        var customerList = ArrayList<CustomerInfo>()
+
+        chkDB()
+
+        var sql = "SELECT * FROM ${DBConfig().TB_CUSTOMER} WHERE ${DBConfig().CO_NAME} like '%${name}%'"
+
+        Log.e("DB", "sql = ${sql}")
+
+        var cursor = mDb?.rawQuery(sql, null)
+
+        if(cursor?.count!! > 0) {
+            while (cursor?.moveToNext()) {
+                var customer = CustomerInfo()
+
+                customer.id = cursor.getInt(cursor.getColumnIndex(DBConfig().CO_INDEX))
+                customer.name = cursor.getString(cursor.getColumnIndex(DBConfig().CO_NAME))
+                customer.tel = cursor.getString(cursor.getColumnIndex(DBConfig().CO_TEL))
+                customer.email = cursor.getString(cursor.getColumnIndex(DBConfig().CO_EMAIL))
+                customer.other = cursor.getString(cursor.getColumnIndex(DBConfig().CO_OTHER))
+
+                customerList.add(customer)
+            }
+
+            cursor.close()
+            return customerList
+        } else {
+            return ArrayList<CustomerInfo>()
+        }
+    }
+
+    fun getCustomerSearchTel(tel: String): ArrayList<CustomerInfo> {
+        var customerList = ArrayList<CustomerInfo>()
+
+        chkDB()
+
+        var sql = "SELECT * FROM ${DBConfig().TB_CUSTOMER} WHERE ${DBConfig().CO_TEL} like '%${tel}%'"
+
+        Log.e("DB", "sql = ${sql}")
+
+        var cursor = mDb?.rawQuery(sql, null)
+
+        if(cursor?.count!! > 0) {
+            while (cursor?.moveToNext()) {
+                var customer = CustomerInfo()
+
+                customer.id = cursor.getInt(cursor.getColumnIndex(DBConfig().CO_INDEX))
+                customer.name = cursor.getString(cursor.getColumnIndex(DBConfig().CO_NAME))
+                customer.tel = cursor.getString(cursor.getColumnIndex(DBConfig().CO_TEL))
+                customer.email = cursor.getString(cursor.getColumnIndex(DBConfig().CO_EMAIL))
+                customer.other = cursor.getString(cursor.getColumnIndex(DBConfig().CO_OTHER))
+
+                customerList.add(customer)
+            }
+
+            cursor.close()
+            return customerList
+        } else {
+            return ArrayList<CustomerInfo>()
+        }
+    }
+
     fun delCustomer(customer: CustomerInfo): Int {
         chkDB()
 

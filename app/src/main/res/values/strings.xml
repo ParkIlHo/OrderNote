@@ -12,12 +12,15 @@
     <string name="loading">Loading...</string>
     <string name="name">이름(상호)</string>
     <string name="mobile">핸드폰</string>
+    <string name="tel">전화번호</string>
     <string name="product_name">상품명</string>
     <string name="order_date">주문날짜</string>
     <string name="release_yn">출고</string>
     <string name="change2">변경</string>
     <string name="second">초</string>
     <string name="required_input_msg">* : 필수입력</string>
+    <string name="no_data">No Data!</string>
+    <string name="search">검색</string>
 
 
     <!-- Password -->
@@ -72,6 +75,7 @@
     <!-- Customer List -->
     <string name="title_custmer_list">주문자 정보</string>
     <string name="add_custmer">주문자 추가</string>
+    <string name="select_custmer">주문자 선택</string>
     <string name="detail_custmer">주문자 정보 상세</string>
     <string name="change_custmer">주문자 정보 수정</string>
     <string name="label_name">이름(상호) : </string>
@@ -92,6 +96,7 @@
     <string name="not_coustomer">저장된\n정보가 없습니다.!!</string>
     <string name="delete_customer">선택하신 주문자 정보를 삭제 하시겠습니까??\n 이름(상호) : %1$s\n 전화번호 : %2$s</string>
     <string name="change_customer_msg">선택하신 주문자 정보를 변경 하시겠습니까??</string>
+    <string name="select_customer_msg">선택하신 주문자 정보를 가져 오시겠습니까??\n 이름(상호) : %1$s\n 전화번호 : %2$s</string>
     <string name="duplication_customer_msg">전화번소가 동일한 주문자가 있습니다. 전화번호 확인 바랍니다.</string>
 
     <!-- 설정 -->

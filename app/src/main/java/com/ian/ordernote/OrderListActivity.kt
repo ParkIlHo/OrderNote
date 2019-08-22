@@ -16,8 +16,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.ian.ordernote.core.CommonActivity
+import com.ian.ordernote.data.CustomerInfo
 import com.ian.ordernote.data.OrderInfo
 import com.ian.ordernote.db.DB
+import com.ian.ordernote.dialog.CustomerSelectDialog
 import com.ian.ordernote.dialog.OrderDialog
 import com.ian.ordernote.view.CustomerListAdapter
 import com.ian.ordernote.view.OrderListAdapter
@@ -28,12 +30,15 @@ class OrderListActivity: CommonActivity() {
 
     var mDb : DB? = null
     var orderDailog : OrderDialog? = null
+    var customerSelectDialog : CustomerSelectDialog? = null
     lateinit var mAdapter: OrderListAdapter
 
     interface OrderInfoListener {
         fun onDelete()
         fun onAdd()
         fun showOrderInfo(orderinfo: OrderInfo)
+        fun showCustomerSelect()
+        fun selectCustomer(customerInfo: CustomerInfo)
     }
 
     val listener: OrderInfoListener? = object : OrderInfoListener {
@@ -51,6 +56,15 @@ class OrderListActivity: CommonActivity() {
 //            orderDailog!!.show()
         }
 
+        override fun showCustomerSelect() {
+//            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            showCustomerSelectDailog()
+        }
+
+        override fun selectCustomer(customerInfo: CustomerInfo) {
+//            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            selectCustomerToOrder(customerInfo)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -196,5 +210,23 @@ class OrderListActivity: CommonActivity() {
             orderDailog!!.isAdd = false
         }
         orderDailog!!.show()
+    }
+
+    fun showCustomerSelectDailog() {
+        if(customerSelectDialog != null) {
+            if(customerSelectDialog!!.isShowing) {
+                customerSelectDialog!!.dismiss()
+            }
+            customerSelectDialog = null
+        }
+        customerSelectDialog = CustomerSelectDialog(this, listener!!)
+        customerSelectDialog!!.show()
+    }
+
+    fun selectCustomerToOrder(customerInfo: CustomerInfo) {
+        if(customerSelectDialog!!.isShowing) {
+            customerSelectDialog!!.dismiss()
+        }
+        orderDailog?.selectCustomer(customerInfo)
     }
 }
