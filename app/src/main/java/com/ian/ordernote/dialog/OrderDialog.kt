@@ -13,6 +13,7 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import com.ian.ordernote.Const
 import com.ian.ordernote.CustomerListActivity
@@ -28,7 +29,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class OrderDialog(context: Context?, listener: OrderListActivity.OrderInfoListener) : CommonAlertDialog(context), View.OnClickListener, View.OnTouchListener {
+class OrderDialog(context: Context?, listener: OrderListActivity.OrderInfoListener) : CommonAlertDialog(context), View.OnClickListener, View.OnTouchListener, CompoundButton.OnCheckedChangeListener {
 
     var isAdd = true
     var isChange = false
@@ -67,7 +68,7 @@ class OrderDialog(context: Context?, listener: OrderListActivity.OrderInfoListen
 //    lateinit var mProduceImageEdit: EditText
     lateinit var mShippingAddressEdit: EditText
     lateinit var mAccountNameEdit: EditText
-    lateinit var mContentsEdit: EditText
+//    lateinit var mContentsEdit: EditText
     lateinit var mColorEdit: EditText
     lateinit var mSizeEdit: EditText
     lateinit var mTransformEdit: EditText
@@ -86,7 +87,7 @@ class OrderDialog(context: Context?, listener: OrderListActivity.OrderInfoListen
 //    lateinit var mProduceImageText: TextView
     lateinit var mShippingAddressText: TextView
     lateinit var mAccountNameText: TextView
-    lateinit var mContentsText: TextView
+//    lateinit var mContentsText: TextView
     lateinit var mColorText: TextView
     lateinit var mSizeText: TextView
     lateinit var mTransformText: TextView
@@ -96,6 +97,15 @@ class OrderDialog(context: Context?, listener: OrderListActivity.OrderInfoListen
     lateinit var mProductImage: ImageView
 
     lateinit var mAccountBtn: Button
+
+    lateinit var mContent14K: RadioButton
+    lateinit var mContent18K: RadioButton
+    lateinit var mContent24K: RadioButton
+    lateinit var mContentOther: RadioButton
+
+    lateinit var mContentOtherLayout: ViewGroup
+    lateinit var mContentOtherEdit: EditText
+    lateinit var mContentOtherText: TextView
 
     init {
         mDb = DB(context).getInstance(context!!)
@@ -119,7 +129,7 @@ class OrderDialog(context: Context?, listener: OrderListActivity.OrderInfoListen
         mReleaseN = mDialogView.findViewById(R.id.dialog_add_order_release_n)
         mShippingAddressEdit = mDialogView.findViewById(R.id.dialog_add_order_shipping_address)
         mAccountNameEdit = mDialogView.findViewById(R.id.dialog_add_order_account_name)
-        mContentsEdit = mDialogView.findViewById(R.id.dialog_add_order_content)
+//        mContentsEdit = mDialogView.findViewById(R.id.dialog_add_order_content)
         mColorEdit = mDialogView.findViewById(R.id.dialog_add_order_color)
         mSizeEdit = mDialogView.findViewById(R.id.dialog_add_order_size)
         mTransformEdit = mDialogView.findViewById(R.id.dialog_add_order_transform)
@@ -137,7 +147,7 @@ class OrderDialog(context: Context?, listener: OrderListActivity.OrderInfoListen
         mReleaseText = mDialogView.findViewById(R.id.dialog_add_order_release_text)
         mShippingAddressText = mDialogView.findViewById(R.id.dialog_add_order_shipping_address_text)
         mAccountNameText = mDialogView.findViewById(R.id.dialog_add_order_account_name_text)
-        mContentsText = mDialogView.findViewById(R.id.dialog_add_order_content_text)
+//        mContentsText = mDialogView.findViewById(R.id.dialog_add_order_content_text)
         mColorText = mDialogView.findViewById(R.id.dialog_add_order_color_text)
         mSizeText = mDialogView.findViewById(R.id.dialog_add_order_size_text)
         mTransformText = mDialogView.findViewById(R.id.dialog_add_order_transform_text)
@@ -148,6 +158,15 @@ class OrderDialog(context: Context?, listener: OrderListActivity.OrderInfoListen
 
         mProductImage = mDialogView.findViewById<ImageView>(R.id.dialog_add_order_product_image_view)
 
+        mContent14K = mDialogView.findViewById(R.id.dialog_add_order_content_14)
+        mContent18K = mDialogView.findViewById(R.id.dialog_add_order_content_18)
+        mContent24K = mDialogView.findViewById(R.id.dialog_add_order_content_24)
+        mContentOther = mDialogView.findViewById(R.id.dialog_add_order_content_other)
+
+        mContentOtherLayout = mDialogView.findViewById(R.id.dialog_add_order_content_other_layout)
+        mContentOtherEdit = mDialogView.findViewById(R.id.dialog_add_order_content_other_edit)
+        mContentOtherText = mDialogView.findViewById(R.id.dialog_add_order_content_other_text)
+
         mDialogView.findViewById<Button>(R.id.dialog_add_order_cancel_btn).setOnClickListener(this)
         mDialogView.findViewById<Button>(R.id.dialog_add_order_save_btn).setOnClickListener(this)
         mDialogView.findViewById<Button>(R.id.dialog_add_order_confirm_btn).setOnClickListener(this)
@@ -155,6 +174,7 @@ class OrderDialog(context: Context?, listener: OrderListActivity.OrderInfoListen
         mProductImage.setOnClickListener(this)
 
         mAccountBtn.setOnClickListener(this)
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mOrderDateEdit.showSoftInputOnFocus = false
@@ -165,6 +185,11 @@ class OrderDialog(context: Context?, listener: OrderListActivity.OrderInfoListen
         mOrderDateEdit.setOnTouchListener(this)
         mReleaseDateEdit.setOnTouchListener(this)
         mPromiseDateEdit.setOnTouchListener(this)
+
+        mContent14K.setOnCheckedChangeListener(this)
+        mContent18K.setOnCheckedChangeListener(this)
+        mContent24K.setOnCheckedChangeListener(this)
+        mContentOther.setOnCheckedChangeListener(this)
 
         mReleaseN.setOnCheckedChangeListener { view, isChecked ->
             if(isChecked) {
@@ -191,9 +216,16 @@ class OrderDialog(context: Context?, listener: OrderListActivity.OrderInfoListen
         when(view?.id) {
             R.id.dialog_add_order_cancel_btn -> { // Add cancel
                 if(isAdd) {
-                    if (isShowing) {
-                        dismiss()
-                    }
+
+                    showAlertDialog(mContext, "작성 중이던 내역을 취소하시겠습니까? 작성중이던 내용은 저장되지 않습니다.",
+                        mContext.getString(R.string.confirm),
+                        mContext.getString(R.string.cancel),
+                        DialogInterface.OnClickListener { dialogInterface, i ->
+                            if (isShowing) {
+                                dismiss()
+                            }
+                        },
+                        null)
                 } else {
                     // 수정중인 order info cancel popup
                     showAlertDialog(mContext, "주문내역 수정을 취소하시겠습니까? 수정중이던 내용은 저장되지 않습니다.",
@@ -260,6 +292,50 @@ class OrderDialog(context: Context?, listener: OrderListActivity.OrderInfoListen
                     selectGallerty()
                 } else {
                     // popup 창으로 image 보여짐
+                }
+            }
+
+            R.id.dialog_add_order_content_14 -> {
+
+            }
+        }
+    }
+
+    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        when(buttonView?.id) {
+            R.id.dialog_add_order_content_14 -> {
+                if(isChecked) {
+                    mOrderInfo.content = 0
+                    mOrderInfo.content_other = ""
+                    mContentOtherEdit.setText("")
+                    mContentOtherLayout.visibility = View.GONE
+                }
+            }
+
+            R.id.dialog_add_order_content_18 -> {
+                if(isChecked) {
+                    mOrderInfo.content = 1
+                    mOrderInfo.content_other = ""
+                    mContentOtherEdit.setText("")
+                    mContentOtherLayout.visibility = View.GONE
+                }
+            }
+
+            R.id.dialog_add_order_content_24 -> {
+                if(isChecked) {
+                    mOrderInfo.content = 0
+                    mOrderInfo.content_other = ""
+                    mContentOtherEdit.setText("")
+                    mContentOtherLayout.visibility = View.GONE
+                }
+            }
+
+            R.id.dialog_add_order_content_other -> {
+                if(isChecked) {
+                    mOrderInfo.content = 4
+                    mContentOtherEdit.setText("")
+                    mContentOtherLayout.visibility = View.VISIBLE
                 }
             }
         }
@@ -336,7 +412,38 @@ class OrderDialog(context: Context?, listener: OrderListActivity.OrderInfoListen
 //        mProduceImageEdit.setText("")
         mShippingAddressEdit.setText("")
         mAccountNameEdit.setText("")
-        mContentsEdit.setText("")
+//        mContentsEdit.setText("")
+
+        if(mOrderInfo == null || mOrderInfo.content < 0) {
+            mContent14K.isChecked = true
+        } else {
+            when(mOrderInfo.content) {
+                Const.ORDER_CONTENT_14K -> {
+                    mContent14K.isChecked = true
+                    mOrderInfo.content_other = ""
+                    mContentOtherEdit.setText("")
+                    mContentOtherLayout.visibility = View.GONE
+                }
+                Const.ORDER_CONTENT_18K -> {
+                    mContent18K.isChecked = true
+                    mOrderInfo.content_other = ""
+                    mContentOtherEdit.setText("")
+                    mContentOtherLayout.visibility = View.GONE
+                }
+                Const.ORDER_CONTENT_24K -> {
+                    mContent24K.isChecked = true
+                    mOrderInfo.content_other = ""
+                    mContentOtherEdit.setText("")
+                    mContentOtherLayout.visibility = View.GONE
+                }
+                Const.ORDER_CONTENT_OTHER -> {
+                    mContentOther.isChecked = true
+                    mContentOtherLayout.visibility = View.VISIBLE
+                    mContentOtherEdit.setText(mOrderInfo.content_other)
+                }
+            }
+        }
+
         mColorEdit.setText("")
         mSizeEdit.setText("")
         mTransformEdit.setText("")
@@ -371,7 +478,35 @@ class OrderDialog(context: Context?, listener: OrderListActivity.OrderInfoListen
 //        mProduceImageEdit.setText(orderInfo.productImage)
         mShippingAddressEdit.setText(orderInfo.shippingAddress)
         mAccountNameEdit.setText(orderInfo.accountName)
-        mContentsEdit.setText(orderInfo.content)
+//        mContentsEdit.setText(orderInfo.content)
+
+        when(mOrderInfo.content) {
+            Const.ORDER_CONTENT_14K -> {
+                mContent14K.isChecked = true
+                mOrderInfo.content_other = ""
+                mContentOtherEdit.setText("")
+                mContentOtherLayout.visibility = View.GONE
+            }
+            Const.ORDER_CONTENT_18K -> {
+                mContent18K.isChecked = true
+                mOrderInfo.content_other = ""
+                mContentOtherEdit.setText("")
+                mContentOtherLayout.visibility = View.GONE
+            }
+            Const.ORDER_CONTENT_24K -> {
+                mContent24K.isChecked = true
+                mOrderInfo.content_other = ""
+                mContentOtherEdit.setText("")
+                mContentOtherLayout.visibility = View.GONE
+            }
+            Const.ORDER_CONTENT_OTHER -> {
+                mContentOther.isChecked = true
+                mContentOtherLayout.visibility = View.VISIBLE
+                mContentOtherEdit.setText(mOrderInfo.content_other)
+            }
+        }
+
+
         mColorEdit.setText(orderInfo.color)
         mSizeEdit.setText(orderInfo.size)
         mTransformEdit.setText(orderInfo.transform)
@@ -393,7 +528,25 @@ class OrderDialog(context: Context?, listener: OrderListActivity.OrderInfoListen
 //        mProduceImageText.setText(orderInfo.productImage)
         mShippingAddressText.setText(orderInfo.shippingAddress)
         mAccountNameText.setText(orderInfo.accountName)
-        mContentsText.setText(orderInfo.content)
+//        mContentsText.setText(orderInfo.content)
+
+        mContentOtherText.setText(orderInfo.content_other)
+
+        when(orderInfo.content) {
+            Const.ORDER_CONTENT_14K -> {
+                mContent14K.isChecked = true
+            }
+            Const.ORDER_CONTENT_18K -> {
+                mContent18K.isChecked = true
+            }
+            Const.ORDER_CONTENT_24K -> {
+                mContent24K.isChecked = true
+            }
+            Const.ORDER_CONTENT_OTHER -> {
+                mContentOther.isChecked = true
+            }
+        }
+
         mColorText.setText(orderInfo.color)
         mSizeText.setText(orderInfo.size)
         mTransformText.setText(orderInfo.transform)
@@ -413,6 +566,15 @@ class OrderDialog(context: Context?, listener: OrderListActivity.OrderInfoListen
                 this.isChange = true
                 mDialogView.findViewById<TextView>(R.id.dialog_add_order_title).setText(R.string.change_order)
             }
+
+            mReleaseY.isClickable = true
+            mReleaseN.isClickable = true
+
+            mContent14K.isClickable = true
+            mContent18K.isClickable = true
+            mContent24K.isClickable = true
+            mContentOther.isClickable = true
+
             mDialogView.findViewById<LinearLayout>(R.id.dailog_add_order_add_btn_layout).visibility = View.VISIBLE
             mDialogView.findViewById<LinearLayout>(R.id.dailog_add_order_detail_btn_layout).visibility = View.GONE
 
@@ -428,7 +590,8 @@ class OrderDialog(context: Context?, listener: OrderListActivity.OrderInfoListen
 //            mProduceImageEdit.visibility = View.VISIBLE
             mShippingAddressEdit.visibility = View.VISIBLE
             mAccountNameEdit.visibility = View.VISIBLE
-            mContentsEdit.visibility = View.VISIBLE
+//            mContentsEdit.visibility = View.VISIBLE
+            mContentOtherEdit.visibility = View.VISIBLE
             mColorEdit.visibility = View.VISIBLE
             mSizeEdit.visibility = View.VISIBLE
             mTransformEdit.visibility = View.VISIBLE
@@ -447,7 +610,8 @@ class OrderDialog(context: Context?, listener: OrderListActivity.OrderInfoListen
 //            mProduceImageText.visibility = View.GONE
             mShippingAddressText.visibility = View.GONE
             mAccountNameText.visibility = View.GONE
-            mContentsText.visibility = View.GONE
+//            mContentsText.visibility = View.GONE
+            mContentOtherText.visibility = View.GONE
             mColorText.visibility = View.GONE
             mSizeText.visibility = View.GONE
             mTransformText.visibility = View.GONE
@@ -458,6 +622,16 @@ class OrderDialog(context: Context?, listener: OrderListActivity.OrderInfoListen
                 this.isChange = false
                 mDialogView.findViewById<TextView>(R.id.dialog_add_order_title).setText(R.string.confirm_order)
             }
+
+            mReleaseY.isClickable = false
+            mReleaseN.isClickable = false
+
+            mContent14K.isClickable = false
+            mContent18K.isClickable = false
+            mContent24K.isClickable = false
+            mContentOther.isClickable = false
+
+
             mDialogView.findViewById<LinearLayout>(R.id.dailog_add_order_add_btn_layout).visibility = View.GONE
             mDialogView.findViewById<LinearLayout>(R.id.dailog_add_order_detail_btn_layout).visibility = View.VISIBLE
 
@@ -473,7 +647,8 @@ class OrderDialog(context: Context?, listener: OrderListActivity.OrderInfoListen
 //            mProduceImageEdit.visibility = View.GONE
             mShippingAddressEdit.visibility = View.GONE
             mAccountNameEdit.visibility = View.GONE
-            mContentsEdit.visibility = View.GONE
+//            mContentsEdit.visibility = View.GONE
+            mContentOtherEdit.visibility = View.GONE
             mColorEdit.visibility = View.GONE
             mSizeEdit.visibility = View.GONE
             mTransformEdit.visibility = View.GONE
@@ -492,7 +667,8 @@ class OrderDialog(context: Context?, listener: OrderListActivity.OrderInfoListen
 //            mProduceImageText.visibility = View.VISIBLE
             mShippingAddressText.visibility = View.VISIBLE
             mAccountNameText.visibility = View.VISIBLE
-            mContentsText.visibility = View.VISIBLE
+//            mContentsText.visibility = View.VISIBLE
+            mContentOtherText.visibility = View.VISIBLE
             mColorText.visibility = View.VISIBLE
             mSizeText.visibility = View.VISIBLE
             mTransformText.visibility = View.VISIBLE
@@ -534,7 +710,19 @@ class OrderDialog(context: Context?, listener: OrderListActivity.OrderInfoListen
 //        orderInfo.productImage = mProduceImageEdit.text.toString()
         orderInfo.shippingAddress = mShippingAddressEdit.text.toString()
         orderInfo.accountName = mAccountNameEdit.text.toString()
-        orderInfo.content = mContentsEdit.text.toString()
+
+        if(mContent14K.isChecked) {
+            orderInfo.content = 0
+        } else if(mContent18K.isChecked) {
+            orderInfo.content = 1
+        } else if(mContent24K.isChecked) {
+            orderInfo.content = 2
+        } else {
+            orderInfo.content = 3
+        }
+
+        orderInfo.content_other = mContentOtherEdit.text.toString()
+
         orderInfo.color = mColorEdit.text.toString()
         orderInfo.size = mSizeEdit.text.toString()
         orderInfo.transform = mTransformEdit.text.toString()

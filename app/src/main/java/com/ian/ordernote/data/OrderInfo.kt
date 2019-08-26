@@ -26,7 +26,9 @@ class OrderInfo {
     //거래처명
     var accountName = ""
     //함량
-    var content = ""
+    var content = 0
+    //함량 other
+    var content_other = ""
     //컬러
     var color = ""
     //사이즈

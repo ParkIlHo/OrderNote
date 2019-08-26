@@ -40,6 +40,8 @@ class DBConfig {
     val CO_ACCOUNT_NAME = "account_name"
     //함량
     val CO_CONTENT = "content"
+    //함량 other
+    val CO_CONTENT_OTHER = "content_other"
     //컬러
     val CO_COLOR = "color"
     //사이즈
@@ -77,6 +79,7 @@ class DBConfig {
             CO_SHIPPING_ADDRESS + " VARCHAR(500)," +
             CO_ACCOUNT_NAME + " VARCHAR(20)," +
             CO_CONTENT + " INT UNSIGNED NOT NULL DEFAULT '0'," +
+            CO_CONTENT_OTHER + " VARCHAR(20)," +
             CO_COLOR + " VARCHAR(20)," +
             CO_SIZE + " VARCHAR(50)," +
             CO_TRANSFORM + " VARCHAR(500)," +

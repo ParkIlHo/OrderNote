@@ -68,6 +68,7 @@
     <string name="hint_size">사이즈를 입력하세요.</string>
     <string name="hint_transform">변형사항을 입력하세요.</string>
     <string name="hint_promise_date">손님과의 약속 날짜를 입력하세요.</string>
+    <string name="hint_content_other">기타 함량 정보를 입력하세요.</string>
     <string name="cancel_add_order">작성중이던 주문내역 추가를 취소 하시겠습니까?</string>
     <string name="delete_order">선택하신 주문내역을 삭제 하시겠습니까??\n 이름(상호) : %1$s\n 핸드폰 : %2$s\n제품명 : %3$s</string>
     <string name="order_check_msg">이름(상호)와 전화번호 / 상품명은 필수 입력사항 입니다.\n필수 입력사항 입력을 확인 해 주세요.!!</string>

@@ -496,6 +496,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
+                                        android:button="@drawable/selector_radio_btn"
                                         android:text="Y"
                                         android:textColor="@color/string"/>
                                 <RadioButton
@@ -503,6 +504,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
+                                        android:button="@drawable/selector_radio_btn"
                                         android:text="N"
                                         android:textColor="@color/string"/>
                             </RadioGroup>
@@ -807,28 +809,106 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1">
-                            <EditText
-                                    android:id="@+id/dialog_add_order_content"
+                            <RadioGroup
+                                    android:id="@+id/dialog_add_order_content_radio_group"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:gravity="center_vertical"
-                                    android:hint="@string/hint_content"
-                                    android:background="@color/edit_bg"
-                                    android:layout_marginTop="7dp"
-                                    android:layout_marginBottom="7dp"
-                                    android:textSize="15dp"
-                                    android:textColor="@color/string"
-                                    android:textColorHint="@android:color/darker_gray"/>
-                            <TextView
-                                    android:id="@+id/dialog_add_order_content_text"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center_vertical"
-                                    android:textSize="15dp"
-                                    android:textColor="@color/string"
-                                    android:visibility="gone"/>
+                                    android:orientation="horizontal">
+
+
+                                <RadioButton
+                                        android:id="@+id/dialog_add_order_content_14"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:button="@drawable/selector_radio_btn"
+                                        android:text="14K"
+                                        android:textColor="@color/string"
+                                        android:textSize="12dp"/>
+                                <RadioButton
+                                        android:id="@+id/dialog_add_order_content_18"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:button="@drawable/selector_radio_btn"
+                                        android:layout_weight="1"
+                                        android:text="18K"
+                                        android:textColor="@color/string"
+                                        android:textSize="12dp"/>
+                                <RadioButton
+                                        android:id="@+id/dialog_add_order_content_24"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:button="@drawable/selector_radio_btn"
+                                        android:text="24K"
+                                        android:textColor="@color/string"
+                                        android:textSize="12dp"/>
+                                <RadioButton
+                                        android:id="@+id/dialog_add_order_content_other"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:button="@drawable/selector_radio_btn"
+                                        android:text="기타"
+                                        android:textColor="@color/string"
+                                        android:textSize="12dp"/>
+                            </RadioGroup>
+                            <!--<EditText-->
+                                    <!--android:id="@+id/dialog_add_order_content"-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="match_parent"-->
+                                    <!--android:gravity="center_vertical"-->
+                                    <!--android:hint="@string/hint_content"-->
+                                    <!--android:background="@color/edit_bg"-->
+                                    <!--android:layout_marginTop="7dp"-->
+                                    <!--android:layout_marginBottom="7dp"-->
+                                    <!--android:textSize="15dp"-->
+                                    <!--android:textColor="@color/string"-->
+                                    <!--android:textColorHint="@android:color/darker_gray"/>-->
+                            <!--<TextView-->
+                                    <!--android:id="@+id/dialog_add_order_content_text"-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="match_parent"-->
+                                    <!--android:gravity="center_vertical"-->
+                                    <!--android:textSize="15dp"-->
+                                    <!--android:textColor="@color/string"-->
+                                    <!--android:visibility="gone"/>-->
                         </RelativeLayout>
                     </LinearLayout>
+
+                    <RelativeLayout
+                            android:id="@+id/dialog_add_order_content_other_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="43dp"
+                            android:visibility="gone">
+                        <EditText
+                                android:id="@+id/dialog_add_order_content_other_edit"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginRight="15dp"
+                                android:gravity="center_vertical"
+                                android:hint="@string/hint_content_other"
+                                android:background="@color/edit_bg"
+                                android:layout_marginTop="0dp"
+                                android:layout_marginBottom="7dp"
+                                android:textSize="15dp"
+                                android:textColor="@color/string"
+                                android:textColorHint="@android:color/darker_gray"
+                                />
+                        <TextView
+                                android:id="@+id/dialog_add_order_content_other_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginTop="0dp"
+                                android:layout_marginBottom="7dp"
+                                android:textSize="15dp"
+                                android:textColor="@color/string"
+                                android:visibility="gone"/>
+                    </RelativeLayout>
 
                     <LinearLayout
                             android:layout_width="match_parent"
