@@ -59,6 +59,9 @@ class CustomerSelectDialog(context: Context, listener: OrderListActivity.OrderIn
         mSearchBtn.setOnClickListener(this)
         mDialogView.findViewById<Button>(R.id.dialog_customer_select_search_btn).setOnClickListener(this)
 
+        setCancelable(false)
+        setCanceledOnTouchOutside(false)
+
         object : AsyncTask<String, String, Boolean>() {
             override fun onPreExecute() {
                 super.onPreExecute()

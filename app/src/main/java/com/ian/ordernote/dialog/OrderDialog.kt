@@ -178,6 +178,8 @@ class OrderDialog(context: Context?, listener: OrderListActivity.OrderInfoListen
             }
         }
 
+        setCancelable(false)
+        setCanceledOnTouchOutside(false)
     }
 
     override fun dismiss() {
